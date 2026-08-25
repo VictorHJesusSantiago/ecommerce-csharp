@@ -1,0 +1,16 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY ["src/Ecommerce.Web/Ecommerce.Web.csproj", "Ecommerce.Web/"]
+COPY ["src/Ecommerce.Application/Ecommerce.Application.csproj", "Ecommerce.Application/"]
+COPY ["src/Ecommerce.Domain/Ecommerce.Domain.csproj", "Ecommerce.Domain/"]
+COPY ["src/Ecommerce.Infrastructure/Ecommerce.Infrastructure.csproj", "Ecommerce.Infrastructure/"]
+RUN dotnet restore "Ecommerce.Web/Ecommerce.Web.csproj"
+COPY src/ .
+WORKDIR "/src/Ecommerce.Web"
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+EXPOSE 5001
+ENTRYPOINT ["dotnet", "Ecommerce.Web.dll"]
