@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=EcommerceDb;User Id=sa;Password=YourPassword123!;TrustServerCertificate=true
+      - Redis__ConnectionString=redis:6379
+      - RabbitMQ__HostName=rabbitmq
+    depends_on:
+      - sqlserver
+      - redis
+      - rabbitmq
+    networks:
+      - ecommerce-net
+
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.Web
+    ports:
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=EcommerceDb;User Id=sa;Password=YourPassword123!;TrustServerCertificate=true
+    depends_on:
+      - sqlserver
+    networks:
+      - ecommerce-net
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourPassword123!
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - ecommerce-net
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - ecommerce-net
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - ecommerce-net
+
+  seq:
+    image: datalust/seq:latest
+    ports:
+      - "5341:80"
+    environment:
+      - ACCEPT_EULA=Y
+    volumes:
+      - seq-data:/data
+    networks:
+      - ecommerce-net
+
+volumes:
+  sqlserver-data:
+  redis-data:
+  rabbitmq-data:
+  seq-data:
+
+networks:
+  ecommerce-net:
+    driver: bridge
