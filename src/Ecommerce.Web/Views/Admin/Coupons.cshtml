@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "Admin - Coupons";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Coupons</h1>
+        <a asp-action="CreateCoupon" class="btn btn-primary">Create Coupon</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Min Order</th><th>Usage</th><th>Valid</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        @if (ViewBag.Coupons != null)
+                        {
+                            @foreach (dynamic coupon in ViewBag.Coupons)
+                            {
+                                <tr>
+                                    <td><strong>@coupon.Code</strong></td>
+                                    <td>@coupon.DiscountType</td>
+                                    <td>$@coupon.DiscountValue</td>
+                                    <td>$@(coupon.MinimumOrderAmount ?? 0)</td>
+                                    <td>@coupon.UsedCount / @(coupon.UsageLimit ?? 0)</td>
+                                    <td><span class="badge bg-@(coupon.IsValid ? "success" : "danger")">@(coupon.IsValid ? "Valid" : "Invalid")</span></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <a asp-action="EditCoupon" asp-route-id="@coupon.Id" class="btn btn-outline-primary">Edit</a>
+                                            <button class="btn btn-outline-danger" onclick="deleteCoupon('@coupon.Id')">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
