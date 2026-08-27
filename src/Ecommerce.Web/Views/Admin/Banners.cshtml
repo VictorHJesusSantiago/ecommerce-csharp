@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Admin - Banners";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Banners</h1>
+        <a asp-action="CreateBanner" class="btn btn-primary">Create Banner</a>
+    </div>
+
+    <div class="row">
+        @if (ViewBag.Banners != null)
+        {
+            @foreach (dynamic banner in ViewBag.Banners)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="@banner.ImageUrl" class="card-img-top" alt="@banner.Title" style="height:200px;object-fit:cover;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@banner.Title</h5>
+                            <p class="card-text">@banner.Subtitle</p>
+                            <p class="text-muted small">Position: @banner.Position | Clicks: @banner.ClickCount | Impressions: @banner.Impressions</p>
+                            <span class="badge bg-@(banner.IsActive ? "success" : "danger")">@(banner.IsActive ? "Active" : "Inactive")</span>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-action="EditBanner" asp-route-id="@banner.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
