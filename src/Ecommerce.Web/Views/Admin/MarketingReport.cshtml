@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Admin - Marketing Report";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Marketing Report</h1>
+    <div class="row mb-4">
+        <div class="col-md-3"><div class="card bg-primary text-white"><div class="card-body text-center"><h3>@ViewBag.CouponsUsed</h3><p>Coupons Used</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-success text-white"><div class="card-body text-center"><h3>$@ViewBag.TotalDiscount</h3><p>Total Discount</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-info text-white"><div class="card-body text-center"><h3>@ViewBag.NewsletterSubscribers</h3><p>Subscribers</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-warning text-white"><div class="card-body text-center"><h3>@ViewBag.BannerCTR%</h3><p>Banner CTR</p></div></div></div>
+    </div>
+    <div class="card"><div class="card-header"><h5>Top Coupons</h5></div><div class="card-body">
+        <table class="table table-sm"><thead><tr><th>Code</th><th>Usage</th><th>Discount</th><th>Revenue</th></tr></thead><tbody>
+            @if (ViewBag.TopCoupons != null) { @foreach (dynamic c in ViewBag.TopCoupons) { <tr><td>@c.Code</td><td>@c.UsageCount</td><td>$@c.TotalDiscount</td><td>$@c.Revenue</td></tr> } }
+        </tbody></table>
+    </div></div>
+</div>

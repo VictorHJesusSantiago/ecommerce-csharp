@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Admin - Marketing";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Marketing</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-3"><a asp-action="Coupons" class="card text-decoration-none"><div class="card-body text-center"><i class="fas fa-tag fa-3x text-primary mb-2"></i><h5>Coupons</h5></div></a></div>
+        <div class="col-md-3"><a asp-action="Promotions" class="card text-decoration-none"><div class="card-body text-center"><i class="fas fa-percentage fa-3x text-success mb-2"></i><h5>Promotions</h5></div></a></div>
+        <div class="col-md-3"><a asp-action="Banners" class="card text-decoration-none"><div class="card-body text-center"><i class="fas fa-image fa-3x text-info mb-2"></i><h5>Banners</h5></div></a></div>
+        <div class="col-md-3"><a asp-action="Newsletter" class="card text-decoration-none"><div class="card-body text-center"><i class="fas fa-envelope fa-3x text-warning mb-2"></i><h5>Newsletter</h5></div></a></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header"><h5>Active Coupons</h5></div>
+                <div class="card-body">
+                    @if (ViewBag.ActiveCoupons != null)
+                    {
+                        @foreach (dynamic coupon in ViewBag.ActiveCoupons)
+                        {
+                            <div class="d-flex justify-content-between mb-2">
+                                <span><strong>@coupon.Code</strong> - @coupon.DiscountValue @coupon.DiscountType</span>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header"><h5>Active Banners</h5></div>
+                <div class="card-body">
+                    @if (ViewBag.ActiveBanners != null)
+                    {
+                        @foreach (dynamic banner in ViewBag.ActiveBanners)
+                        {
+                            <div class="d-flex justify-content-between mb-2">
+                                <span><strong>@banner.Title</strong> - @banner.Position</span>
+                                <span class="badge bg-info">@banner.ClickCount clicks</span>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
