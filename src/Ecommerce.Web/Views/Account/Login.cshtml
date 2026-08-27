@@ -1,0 +1,44 @@
+@model dynamic
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card mt-5">
+                <div class="card-body p-5">
+                    <h3 class="text-center mb-4">Sign In</h3>
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" placeholder="you@example.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" placeholder="Enter password" required>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+                            <a href="#" class="text-decoration-none">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-3">Sign In</button>
+                        <hr>
+                        <div class="text-center">
+                            <p class="mb-2">Or sign in with</p>
+                            <button type="button" class="btn btn-outline-dark me-2"><i class="fab fa-google"></i> Google</button>
+                            <button type="button" class="btn btn-outline-primary"><i class="fab fa-facebook"></i> Facebook</button>
+                        </div>
+                        <hr>
+                        <p class="text-center mb-0">Don't have an account? <a asp-action="Register">Sign up</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

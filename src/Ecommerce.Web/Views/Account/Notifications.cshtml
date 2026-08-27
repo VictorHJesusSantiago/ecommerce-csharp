@@ -1,0 +1,27 @@
+@{ ViewData["Title"] = "Notification Preferences"; Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header"><h4>Notification Preferences</h4></div>
+                <div class="card-body">
+                    <form asp-action="UpdateNotificationPreferences" method="post">
+                        <h6>Email Notifications</h6>
+                        <div class="form-check mb-2"><input type="checkbox" class="form-check-input" name="OrderUpdates" value="true" checked /><label class="form-check-label">Order Updates</label></div>
+                        <div class="form-check mb-2"><input type="checkbox" class="form-check-input" name="Promotions" value="true" checked /><label class="form-check-label">Promotions & Sales</label></div>
+                        <div class="form-check mb-2"><input type="checkbox" class="form-check-input" name="Newsletter" value="true" checked /><label class="form-check-label">Newsletter</label></div>
+                        <div class="form-check mb-2"><input type="checkbox" class="form-check-input" name="ProductAlerts" value="true" checked /><label class="form-check-label">Product Alerts (back in stock, price drops)</label></div>
+                        <div class="form-check mb-2"><input type="checkbox" class="form-check-input" name="ReviewReminders" value="true" checked /><label class="form-check-label">Review Reminders</label></div>
+                        <div class="form-check mb-2"><input type="checkbox" class="form-check-input" name="SecurityAlerts" value="true" checked /><label class="form-check-label">Security Alerts</label></div>
+                        <hr />
+                        <h6>Channels</h6>
+                        <div class="form-check mb-2"><input type="checkbox" class="form-check-input" name="EmailEnabled" value="true" checked /><label class="form-check-label">Email</label></div>
+                        <div class="form-check mb-2"><input type="checkbox" class="form-check-input" name="SmsEnabled" value="true" /><label class="form-check-label">SMS</label></div>
+                        <div class="form-check mb-2"><input type="checkbox" class="form-check-input" name="PushEnabled" value="true" /><label class="form-check-label">Push Notifications</label></div>
+                        <button type="submit" class="btn btn-primary mt-3">Save Preferences</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

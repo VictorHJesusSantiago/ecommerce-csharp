@@ -1,0 +1,80 @@
+@model Ecommerce.Web.Models.AccountIndexViewModel
+@{
+    ViewData["Title"] = "My Account";
+}
+
+<div class="container">
+    <h1>My Account</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a asp-action="Index" class="list-group-item list-group-item-action active">Dashboard</a>
+                <a asp-action="Settings" class="list-group-item list-group-item-action">Profile Settings</a>
+                <a asp-action="Addresses" class="list-group-item list-group-item-action">Addresses</a>
+                <a asp-action="PaymentMethods" class="list-group-item list-group-item-action">Payment Methods</a>
+                <a asp-action="Wishlist" class="list-group-item list-group-item-action">Wishlist</a>
+                <a asp-controller="Orders" asp-action="History" class="list-group-item list-group-item-action">Order History</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5>Welcome, @Model.User?.FirstName @Model.User?.LastName!</h5>
+                    <p class="text-muted">Email: @Model.User?.Email</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h3 class="text-primary">@Model.RecentOrderCount</h3>
+                            <p class="text-muted mb-0">Recent Orders</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h3 class="text-primary">@Model.WishlistItemCount</h3>
+                            <p class="text-muted mb-0">Wishlist Items</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h3 class="text-primary">@Model.SavedAddressCount</h3>
+                            <p class="text-muted mb-0">Saved Addresses</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.RecentOrders?.Any() == true)
+            {
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5 class="mb-0">Recent Orders</h5>
+                        <a asp-controller="Orders" asp-action="History" class="text-decoration-none">View All</a>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-sm">
+                            @foreach (var order in Model.RecentOrders)
+                            {
+                                <tr>
+                                    <td>@order.OrderNumber</td>
+                                    <td>@order.CreatedAt.ToString("MMM dd")</td>
+                                    <td>$@order.TotalAmount.ToString("F2")</td>
+                                    <td><span class="badge bg-secondary">@order.Status</span></td>
+                                    <td><a asp-controller="Orders" asp-action="Detail" asp-route-id="@order.Id">View</a></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
