@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Admin - Customer Report";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Customer Report</h1>
+    <div class="row mb-4">
+        <div class="col-md-3"><div class="card bg-primary text-white"><div class="card-body text-center"><h3>@ViewBag.TotalCustomers</h3><p>Total Customers</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-success text-white"><div class="card-body text-center"><h3>@ViewBag.ReturningCustomers</h3><p>Returning</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-info text-white"><div class="card-body text-center"><h3>@ViewBag.RetentionRate%</h3><p>Retention Rate</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-warning text-white"><div class="card-body text-center"><h3>$@ViewBag.AverageLifetimeValue</h3><p>Avg Lifetime Value</p></div></div></div>
+    </div>
+    <div class="card"><div class="card-header"><h5>Customer Segments</h5></div><div class="card-body">
+        <table class="table table-sm"><thead><tr><th>Segment</th><th>Count</th><th>Percentage</th><th>Avg Spend</th></tr></thead><tbody>
+            @if (ViewBag.Segments != null) { @foreach (dynamic seg in ViewBag.Segments) { <tr><td>@seg.Segment</td><td>@seg.Count</td><td>@seg.Percentage%</td><td>$@seg.AverageSpend</td></tr> } }
+        </tbody></table>
+    </div></div>
+</div>

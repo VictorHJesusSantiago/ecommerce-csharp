@@ -1,0 +1,46 @@
+@model Ecommerce.Web.Models.AdminCustomersViewModel
+@{
+    ViewData["Title"] = "Manage Customers";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Customers</h1>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <form asp-action="Customers" method="get" class="row g-3">
+                <div class="col-md-4"><input type="text" class="form-control" name="search" placeholder="Search customers..." value="@Model.SearchQuery" /></div>
+                <div class="col-md-2"><select class="form-select" name="isActive"><option value="">All Status</option><option value="true">Active</option><option value="false">Inactive</option></select></div>
+                <div class="col-md-2"><button type="submit" class="btn btn-primary w-100">Search</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead><tr><th>Name</th><th>Email</th><th>Orders</th><th>Total Spent</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        @if (Model.Customers?.Any() == true)
+                        {
+                            @foreach (var customer in Model.Customers)
+                            {
+                                <tr>
+                                    <td>@customer.FirstName @customer.LastName</td>
+                                    <td>@customer.Email</td>
+                                    <td>@customer.OrderCount</td>
+                                    <td>$@customer.TotalSpent.ToString("F2")</td>
+                                    <td>@customer.CreatedAt.ToString("MMM dd, yyyy")</td>
+                                    <td><span class="badge bg-@(customer.IsActive ? "success" : "danger")">@(customer.IsActive ? "Active" : "Inactive")</span></td>
+                                    <td><a asp-action="CustomerDetail" asp-route-id="@customer.Id" class="btn btn-outline-primary btn-sm">View</a></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
