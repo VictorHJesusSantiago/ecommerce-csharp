@@ -1,0 +1,12 @@
+<div class="star-rating d-inline-flex align-items-center" data-rating="@ViewData["Rating"]">
+    @for (int i = 1; i <= 5; i++)
+    {
+        var filled = i <= (double)(ViewData["Rating"] ?? 0);
+        var halfFilled = !filled && i - 0.5 <= (double)(ViewData["Rating"] ?? 0);
+        <i class="fas fa-star @(filled ? "text-warning" : halfFilled ? "text-warning" : "text-muted")"></i>
+    }
+    @if (ViewData["Count"] != null)
+    {
+        <span class="ms-2 text-muted">(@(ViewData["Count"]) reviews)</span>
+    }
+</div>

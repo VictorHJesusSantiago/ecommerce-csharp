@@ -1,0 +1,18 @@
+<div class="toast-container position-fixed bottom-0 end-0 p-3" id="toast-container">
+    <div class="toast" role="alert" id="notification-toast">
+        <div class="toast-header"><strong class="me-auto" id="toast-title">Notification</strong><button type="button" class="btn-close" data-bs-dismiss="toast"></button></div>
+        <div class="toast-body" id="toast-message"></div>
+    </div>
+</div>
+
+<script>
+    function showToast(title, message, type = 'info') {
+        document.getElementById('toast-title').textContent = title;
+        document.getElementById('toast-message').textContent = message;
+        var toast = new bootstrap.Toast(document.getElementById('notification-toast'));
+        toast.show();
+    }
+    function showSuccessToast(message) { showToast('Success', message, 'success'); }
+    function showErrorToast(message) { showToast('Error', message, 'danger'); }
+    function showWarningToast(message) { showToast('Warning', message, 'warning'); }
+</script>

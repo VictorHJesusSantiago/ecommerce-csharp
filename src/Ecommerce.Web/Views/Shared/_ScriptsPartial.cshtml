@@ -1,0 +1,11 @@
+<partial name="_ToastNotificationsPartial" />
+<partial name="_CookieConsentPartial" />
+<script>
+    window.addEventListener('load', function() {
+        if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookieConsent').style.display = 'block';
+        }
+    });
+    function acceptCookies() { localStorage.setItem('cookiesAccepted', 'true'); document.getElementById('cookieConsent').style.display = 'none'; }
+    function declineCookies() { localStorage.setItem('cookiesAccepted', 'false'); document.getElementById('cookieConsent').style.display = 'none'; }
+</script>
