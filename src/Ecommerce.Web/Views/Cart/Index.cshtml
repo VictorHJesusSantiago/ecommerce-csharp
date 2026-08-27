@@ -1,0 +1,132 @@
+@model Ecommerce.Web.Models.CartViewModel
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<div class="container">
+    <h1>Shopping Cart</h1>
+
+    @if (Model.Items?.Any() == true)
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="@item.ProductImage" alt="@item.ProductName" style="width:80px;height:80px;object-fit:cover;" class="me-3" />
+                                    <div>
+                                        <h6 class="mb-0">@item.ProductName</h6>
+                                        @if (!string.IsNullOrEmpty(item.ProductVariantName))
+                                        {
+                                            <small class="text-muted">@item.ProductVariantName</small>
+                                        }
+                                        <br />
+                                        <small class="text-muted">SKU: @item.Sku</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>$@item.UnitPrice.ToString("F2")</td>
+                            <td>
+                                <div class="input-group" style="width:120px;">
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="updateQuantity('@item.Id', @item.Quantity - 1)">-</button>
+                                    <input type="number" class="form-control form-control-sm text-center" value="@item.Quantity" min="1" max="@item.MaxQuantity" onchange="updateQuantity('@item.Id', this.value)" />
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="updateQuantity('@item.Id', @item.Quantity + 1)">+</button>
+                                </div>
+                            </td>
+                            <td>$@item.TotalPrice.ToString("F2")</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="removeItem('@item.Id')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Apply Coupon</h5>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="couponCode" placeholder="Enter coupon code" />
+                            <button class="btn btn-outline-primary" onclick="applyCoupon()">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Order Summary</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal:</span>
+                            <span>$@Model.SubTotal.ToString("F2")</span>
+                        </div>
+                        @if (Model.DiscountAmount > 0)
+                        {
+                            <div class="d-flex justify-content-between mb-2 text-success">
+                                <span>Discount:</span>
+                                <span>-$@Model.DiscountAmount.ToString("F2")</span>
+                            </div>
+                        }
+                        <hr />
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong>Total:</strong>
+                            <strong>$@Model.TotalAmount.ToString("F2")</strong>
+                        </div>
+                        <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary w-100 btn-lg">Proceed to Checkout</a>
+                        <a asp-controller="Products" asp-action="Index" class="btn btn-outline-secondary w-100 mt-2">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+            <h4>Your cart is empty</h4>
+            <p>Add some products to your cart to get started.</p>
+            <a asp-controller="Products" asp-action="Index" class="btn btn-primary">Browse Products</a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function updateQuantity(itemId, quantity) {
+            fetch('/cart/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ itemId: itemId, quantity: parseInt(quantity) })
+            }).then(r => r.json()).then(d => { window.location.reload(); });
+        }
+        function removeItem(itemId) {
+            fetch('/cart/remove/' + itemId, { method: 'POST' })
+                .then(r => r.json()).then(d => { window.location.reload(); });
+        }
+        function applyCoupon() {
+            var code = document.getElementById('couponCode').value;
+            fetch('/cart/coupon', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: code })
+            }).then(r => r.json()).then(d => { window.location.reload(); });
+        }
+    </script>
+}

@@ -1,0 +1,143 @@
+@model Ecommerce.Web.Models.CheckoutViewModel
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container">
+    <h1>Checkout</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Index" method="post">
+                <div class="card mb-4">
+                    <div class="card-header"><h5>Shipping Address</h5></div>
+                    <div class="card-body">
+                        @if (Model.SavedAddresses?.Any() == true)
+                        {
+                            @foreach (var address in Model.SavedAddresses)
+                            {
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="ShippingAddressId" value="@address.Id" id="addr_@address.Id" @(address.IsDefault ? "checked" : "") />
+                                    <label class="form-check-label" for="addr_@address.Id">
+                                        <strong>@address.Label</strong><br />
+                                        @address.Street, @address.City, @address.State @address.PostalCode<br />
+                                        @address.Country
+                                    </label>
+                                </div>
+                            }
+                        }
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="ShippingAddressId" value="new" id="newAddress" />
+                            <label class="form-check-label" for="newAddress">Use a new address</label>
+                        </div>
+                        <div id="newAddressForm" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-6 mb-3"><label class="form-label">Street</label><input type="text" class="form-control" name="NewAddress.Street" /></div>
+                                <div class="col-md-6 mb-3"><label class="form-label">Street 2</label><input type="text" class="form-control" name="NewAddress.Street2" /></div>
+                                <div class="col-md-4 mb-3"><label class="form-label">City</label><input type="text" class="form-control" name="NewAddress.City" /></div>
+                                <div class="col-md-4 mb-3"><label class="form-label">State</label><input type="text" class="form-control" name="NewAddress.State" /></div>
+                                <div class="col-md-4 mb-3"><label class="form-label">Postal Code</label><input type="text" class="form-control" name="NewAddress.PostalCode" /></div>
+                                <div class="col-md-6 mb-3"><label class="form-label">Country</label><input type="text" class="form-control" name="NewAddress.Country" /></div>
+                                <div class="col-md-6 mb-3"><label class="form-label">Phone</label><input type="text" class="form-control" name="NewAddress.Phone" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header"><h5>Payment Method</h5></div>
+                    <div class="card-body">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="PaymentMethod" value="CreditCard" id="creditCard" checked />
+                            <label class="form-check-label" for="creditCard">Credit Card</label>
+                        </div>
+                        <div id="creditCardForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3"><label class="form-label">Card Number</label><input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" /></div>
+                                <div class="col-md-3 mb-3"><label class="form-label">Expiry</label><input type="text" class="form-control" id="cardExpiry" placeholder="MM/YY" /></div>
+                                <div class="col-md-3 mb-3"><label class="form-label">CVC</label><input type="text" class="form-control" id="cardCvc" placeholder="123" /></div>
+                                <div class="col-md-6 mb-3"><label class="form-label">Name on Card</label><input type="text" class="form-control" id="cardName" /></div>
+                            </div>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="PaymentMethod" value="PayPal" id="paypal" />
+                            <label class="form-check-label" for="paypal">PayPal</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header"><h5>Order Notes</h5></div>
+                    <div class="card-body">
+                        <textarea class="form-control" name="Notes" rows="3" placeholder="Special instructions for your order..."></textarea>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header"><h5>Coupon Code</h5></div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="CouponCode" placeholder="Enter coupon code" />
+                            <button type="button" class="btn btn-outline-primary" onclick="applyCoupon()">Apply</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100">Place Order</button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header"><h5>Order Summary</h5></div>
+                <div class="card-body">
+                    @if (Model.Items?.Any() == true)
+                    {
+                        @foreach (var item in Model.Items)
+                        {
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>@item.ProductName x @item.Quantity</span>
+                                <span>$@item.TotalPrice.ToString("F2")</span>
+                            </div>
+                        }
+                    }
+                    <hr />
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <span>$@Model.SubTotal.ToString("F2")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Shipping:</span>
+                        <span>$@Model.ShippingCost.ToString("F2")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Tax:</span>
+                        <span>$@Model.TaxAmount.ToString("F2")</span>
+                    </div>
+                    @if (Model.DiscountAmount > 0)
+                    {
+                        <div class="d-flex justify-content-between mb-2 text-success">
+                            <span>Discount:</span>
+                            <span>-$@Model.DiscountAmount.ToString("F2")</span>
+                        </div>
+                    }
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <strong>Total:</strong>
+                        <strong>$@Model.TotalAmount.ToString("F2")</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('input[name="ShippingAddressId"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('newAddressForm').style.display = this.value === 'new' ? 'block' : 'none';
+            });
+        });
+    </script>
+}
