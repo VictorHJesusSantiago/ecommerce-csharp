@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Admin - Edit Brand";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Edit Brand</h1>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="EditBrandPost" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="Id" value="@ViewBag.BrandId" />
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">Name</label><input type="text" class="form-control" name="Name" value="@ViewBag.Name" required /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Slug</label><input type="text" class="form-control" name="Slug" value="@ViewBag.Slug" /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Description</label><textarea class="form-control" name="Description" rows="3">@ViewBag.Description</textarea></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Logo</label><input type="file" class="form-control" name="Logo" accept="image/*" /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Website</label><input type="url" class="form-control" name="Website" value="@ViewBag.Website" /></div>
+                    <div class="col-md-6 form-check mt-4"><input type="checkbox" class="form-check-input" name="IsActive" value="true" @(ViewBag.IsActive == true ? "checked" : "") /><label class="form-check-label">Active</label></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a asp-action="Brands" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+@model Ecommerce.Web.Models.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Dashboard</h1>
+
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div><h6 class="text-uppercase">Total Revenue</h6><h2>$@Model.Dashboard?.TotalRevenue.ToString("N2")</h2></div>
+                        <i class="fas fa-dollar-sign fa-3x opacity-50"></i>
+                    </div>
+                    <div>@Model.Dashboard?.RevenueGrowth% growth</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div><h6 class="text-uppercase">Total Orders</h6><h2>@Model.Dashboard?.TotalOrders.ToString("N0")</h2></div>
+                        <i class="fas fa-shopping-cart fa-3x opacity-50"></i>
+                    </div>
+                    <div>@Model.Dashboard?.OrderGrowth% growth</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div><h6 class="text-uppercase">Total Products</h6><h2>@Model.Dashboard?.TotalProducts.ToString("N0")</h2></div>
+                        <i class="fas fa-box fa-3x opacity-50"></i>
+                    </div>
+                    <div>Active catalog</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div><h6 class="text-uppercase">Total Customers</h6><h2>@Model.Dashboard?.TotalCustomers.ToString("N0")</h2></div>
+                        <i class="fas fa-users fa-3x opacity-50"></i>
+                    </div>
+                    <div>Registered users</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body text-center"><h4>$@Model.Dashboard?.AverageOrderValue.ToString("F2")</h4><p class="text-muted mb-0">Avg. Order Value</p></div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body text-center"><h4>@Model.Dashboard?.ConversionRate.ToString("F1")%</h4><p class="text-muted mb-0">Conversion Rate</p></div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body text-center"><h4>$@(Model.Dashboard?.TotalRevenue / Math.Max(1, Model.Dashboard?.TotalCustomers ?? 1))</h4><p class="text-muted mb-0">Revenue per Customer</p></div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body text-center"><h4>@Model.Dashboard?.LowStockProducts?.Count</h4><p class="text-muted mb-0">Low Stock Alerts</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-8 mb-4">
+            <div class="card">
+                <div class="card-header"><h5>Recent Orders</h5></div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead><tr><th>Order #</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
+                        <tbody>
+                            @if (Model.Dashboard?.RecentOrders?.Any() == true)
+                            {
+                                @foreach (var order in Model.Dashboard.RecentOrders)
+                                {
+                                    <tr>
+                                        <td>@order.OrderNumber</td>
+                                        <td>@order.UserEmail</td>
+                                        <td>$@order.TotalAmount.ToString("F2")</td>
+                                        <td><span class="badge bg-@(order.Status == "Delivered" ? "success" : "warning")">@order.Status</span></td>
+                                        <td>@order.CreatedAt.ToString("MMM dd")</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <div class="card">
+                <div class="card-header"><h5>Low Stock Products</h5></div>
+                <div class="card-body">
+                    @if (Model.Dashboard?.LowStockProducts?.Any() == true)
+                    {
+                        @foreach (var product in Model.Dashboard.LowStockProducts)
+                        {
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>@product.ProductName</span>
+                                <span class="badge bg-danger">@product.StockQuantity left</span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">No low stock alerts.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
