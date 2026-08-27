@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Admin - Reports";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Reports</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-3"><a asp-action="RevenueReport" class="card text-decoration-none"><div class="card-body text-center"><i class="fas fa-chart-line fa-3x text-primary mb-2"></i><h5>Revenue Report</h5></div></a></div>
+        <div class="col-md-3"><a asp-action="SalesReport" class="card text-decoration-none"><div class="card-body text-center"><i class="fas fa-chart-bar fa-3x text-success mb-2"></i><h5>Sales Report</h5></div></a></div>
+        <div class="col-md-3"><a asp-action="CustomerReport" class="card text-decoration-none"><div class="card-body text-center"><i class="fas fa-users fa-3x text-info mb-2"></i><h5>Customer Report</h5></div></a></div>
+        <div class="col-md-3"><a asp-action="InventoryReport" class="card text-decoration-none"><div class="card-body text-center"><i class="fas fa-boxes fa-3x text-warning mb-2"></i><h5>Inventory Report</h5></div></a></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"><a asp-action="PaymentReport" class="card text-decoration-none"><div class="card-body text-center"><i class="fas fa-credit-card fa-3x text-danger mb-2"></i><h5>Payment Report</h5></div></a></div>
+        <div class="col-md-3"><a asp-action="MarketingReport" class="card text-decoration-none"><div class="card-body text-center"><i class="fas fa-bullhorn fa-3x text-secondary mb-2"></i><h5>Marketing Report</h5></div></a></div>
+        <div class="col-md-3"><a asp-action="ProductPerformance" class="card text-decoration-none"><div class="card-body text-center"><i class="fas fa-chart-pie fa-3x text-dark mb-2"></i><h5>Product Performance</h5></div></a></div>
+    </div>
+</div>
