@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Admin - Inventory Report";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Inventory Report</h1>
+    <div class="row mb-4">
+        <div class="col-md-3"><div class="card bg-success text-white"><div class="card-body text-center"><h3>@ViewBag.InStock</h3><p>In Stock</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-warning text-white"><div class="card-body text-center"><h3>@ViewBag.LowStock</h3><p>Low Stock</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-danger text-white"><div class="card-body text-center"><h3>@ViewBag.OutOfStock</h3><p>Out of Stock</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-info text-white"><div class="card-body text-center"><h3>$@ViewBag.TotalValue</h3><p>Total Value</p></div></div></div>
+    </div>
+    <div class="card"><div class="card-header"><h5>Warehouse Breakdown</h5></div><div class="card-body">
+        <table class="table table-sm"><thead><tr><th>Warehouse</th><th>Products</th><th>Value</th></tr></thead><tbody>
+            @if (ViewBag.WarehouseBreakdown != null) { @foreach (dynamic wh in ViewBag.WarehouseBreakdown) { <tr><td>@wh.WarehouseName</td><td>@wh.ProductCount</td><td>$@wh.TotalValue</td></tr> } }
+        </tbody></table>
+    </div></div>
+</div>
