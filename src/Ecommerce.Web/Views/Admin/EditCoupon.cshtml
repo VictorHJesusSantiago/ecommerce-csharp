@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Admin - Edit Coupon";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Edit Coupon</h1>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="EditCouponPost" method="post">
+                <input type="hidden" name="Id" value="@ViewBag.CouponId" />
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">Code</label><input type="text" class="form-control" name="Code" value="@ViewBag.Code" required style="text-transform:uppercase;" /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Description</label><input type="text" class="form-control" name="Description" value="@ViewBag.Description" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Discount Type</label><select class="form-select" name="DiscountType"><option value="Percentage">Percentage</option><option value="Fixed">Fixed Amount</option></select></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Discount Value</label><input type="number" class="form-control" name="DiscountValue" step="0.01" value="@ViewBag.DiscountValue" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Usage Limit</label><input type="number" class="form-control" name="UsageLimit" value="@ViewBag.UsageLimit" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Start Date</label><input type="datetime-local" class="form-control" name="StartDate" value="@ViewBag.StartDate" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">End Date</label><input type="datetime-local" class="form-control" name="EndDate" value="@ViewBag.EndDate" /></div>
+                    <div class="col-md-4 form-check mt-4"><input type="checkbox" class="form-check-input" name="IsActive" value="true" @(ViewBag.IsActive == true ? "checked" : "") /><label class="form-check-label">Active</label></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a asp-action="Coupons" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
