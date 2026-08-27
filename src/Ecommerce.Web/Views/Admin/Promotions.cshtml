@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Admin - Promotions";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Promotions</h1>
+        <a asp-action="CreatePromotion" class="btn btn-primary">Create Promotion</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead><tr><th>Name</th><th>Type</th><th>Value</th><th>Start</th><th>End</th><th>Usage</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        @if (ViewBag.Promotions != null)
+                        {
+                            @foreach (dynamic promo in ViewBag.Promotions)
+                            {
+                                <tr>
+                                    <td><strong>@promo.Name</strong></td>
+                                    <td>@promo.DiscountType</td>
+                                    <td>$@promo.DiscountValue</td>
+                                    <td>@promo.StartDate.ToString("MMM dd")</td>
+                                    <td>@promo.EndDate.ToString("MMM dd")</td>
+                                    <td>@promo.UsageCount</td>
+                                    <td>
+                                        <a asp-action="EditPromotion" asp-route-id="@promo.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

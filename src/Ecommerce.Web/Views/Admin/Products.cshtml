@@ -1,0 +1,62 @@
+@model Ecommerce.Web.Models.AdminProductsViewModel
+@{
+    ViewData["Title"] = "Manage Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Products</h1>
+        <a asp-action="CreateProduct" class="btn btn-primary">Add Product</a>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <form asp-action="Products" method="get" class="row g-3">
+                <div class="col-md-4"><input type="text" class="form-control" name="search" placeholder="Search products..." value="@Model.SearchQuery" /></div>
+                <div class="col-md-2"><select class="form-select" name="categoryId"><option value="">All Categories</option></select></div>
+                <div class="col-md-2"><select class="form-select" name="brandId"><option value="">All Brands</option></select></div>
+                <div class="col-md-2"><select class="form-select" name="isActive"><option value="">All Status</option><option value="true">Active</option><option value="false">Inactive</option></select></div>
+                <div class="col-md-2"><button type="submit" class="btn btn-primary w-100">Search</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead><tr><th>Image</th><th>Name</th><th>SKU</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        @if (Model.Products?.Any() == true)
+                        {
+                            @foreach (var product in Model.Products)
+                            {
+                                <tr>
+                                    <td><img src="@product.MainImageUrl" style="width:50px;height:50px;object-fit:cover;" /></td>
+                                    <td>@product.Name</td>
+                                    <td>@product.Sku</td>
+                                    <td>$@product.Price.ToString("F2")</td>
+                                    <td>@product.StockQuantity</td>
+                                    <td><span class="badge bg-@(product.IsActive ? "success" : "danger")">@(product.IsActive ? "Active" : "Inactive")</span></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <a asp-action="EditProduct" asp-route-id="@product.Id" class="btn btn-outline-primary">Edit</a>
+                                            <button class="btn btn-outline-danger" onclick="deleteProduct('@product.Id')">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function deleteProduct(id) { if (confirm('Are you sure?')) { fetch('/api/products/' + id, { method: 'DELETE' }).then(r => { if (r.ok) window.location.reload(); }); } }
+    </script>
+}
