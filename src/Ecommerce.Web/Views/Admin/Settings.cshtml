@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Admin - Settings";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Site Settings</h1>
+
+    <form asp-action="SaveSettings" method="post">
+        <div class="card mb-4">
+            <div class="card-header"><h5>General Settings</h5></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">Site Name</label><input type="text" class="form-control" name="site.name" value="@ViewBag.SiteName" /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Site Description</label><input type="text" class="form-control" name="site.description" value="@ViewBag.SiteDescription" /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Support Email</label><input type="email" class="form-control" name="site.supportEmail" value="@ViewBag.SupportEmail" /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Default Currency</label><input type="text" class="form-control" name="site.currency" value="@ViewBag.DefaultCurrency" /></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header"><h5>SEO Settings</h5></div>
+            <div class="card-body">
+                <div class="mb-3"><label class="form-label">Meta Title</label><input type="text" class="form-control" name="seo.metaTitle" value="@ViewBag.MetaTitle" /></div>
+                <div class="mb-3"><label class="form-label">Meta Description</label><textarea class="form-control" name="seo.metaDescription">@ViewBag.MetaDescription</textarea></div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header"><h5>Email Settings</h5></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3"><label class="form-label">SMTP Host</label><input type="text" class="form-control" name="smtp.host" value="@ViewBag.SmtpHost" /></div>
+                    <div class="col-md-2 mb-3"><label class="form-label">SMTP Port</label><input type="number" class="form-control" name="smtp.port" value="@ViewBag.SmtpPort" /></div>
+                    <div class="col-md-3 mb-3"><label class="form-label">SMTP User</label><input type="text" class="form-control" name="smtp.userName" value="@ViewBag.SmtpUser" /></div>
+                    <div class="col-md-3 mb-3"><label class="form-label">From Email</label><input type="email" class="form-control" name="smtp.fromEmail" value="@ViewBag.FromEmail" /></div>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Save Settings</button>
+    </form>
+</div>

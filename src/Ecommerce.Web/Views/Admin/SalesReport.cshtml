@@ -1,0 +1,36 @@
+@{
+    ViewData["Title"] = "Admin - Sales Report";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Sales Report</h1>
+        <a asp-action="Reports" class="btn btn-outline-secondary">Back to Reports</a>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3"><div class="card bg-primary text-white"><div class="card-body text-center"><h3>@ViewBag.TotalSales</h3><p>Total Sales</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-success text-white"><div class="card-body text-center"><h3>$@ViewBag.TotalRevenue</h3><p>Total Revenue</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-info text-white"><div class="card-body text-center"><h3>@ViewBag.TotalItemsSold</h3><p>Items Sold</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-warning text-white"><div class="card-body text-center"><h3>$@ViewBag.AverageOrderValue</h3><p>Avg Order Value</p></div></div></div>
+    </div>
+
+    <div class="card">
+        <div class="card-header"><h5>Top Selling Products</h5></div>
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead><tr><th>Product</th><th>Quantity Sold</th><th>Revenue</th></tr></thead>
+                <tbody>
+                    @if (ViewBag.TopProducts != null)
+                    {
+                        @foreach (dynamic product in ViewBag.TopProducts)
+                        {
+                            <tr><td>@product.ProductName</td><td>@product.QuantitySold</td><td>$@product.Revenue</td></tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

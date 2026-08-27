@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Admin - Suppliers";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Suppliers</h1>
+        <a asp-action="CreateSupplier" class="btn btn-primary">Add Supplier</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead><tr><th>Name</th><th>Contact</th><th>Email</th><th>Phone</th><th>Products</th><th>Rating</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        @if (ViewBag.Suppliers != null)
+                        {
+                            @foreach (dynamic supplier in ViewBag.Suppliers)
+                            {
+                                <tr>
+                                    <td><strong>@supplier.Name</strong></td>
+                                    <td>@supplier.ContactPerson</td>
+                                    <td>@supplier.Email</td>
+                                    <td>@supplier.Phone</td>
+                                    <td>@supplier.ProductsSupplied</td>
+                                    <td><span class="text-warning">&#9733;</span> @supplier.Rating</td>
+                                    <td><span class="badge bg-@(supplier.IsActive ? "success" : "danger")">@(supplier.IsActive ? "Active" : "Inactive")</span></td>
+                                    <td>
+                                        <a asp-action="SupplierDetail" asp-route-id="@supplier.Id" class="btn btn-outline-primary btn-sm">View</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

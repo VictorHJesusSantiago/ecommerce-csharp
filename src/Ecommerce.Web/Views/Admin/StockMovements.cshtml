@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Admin - Stock Movements";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Stock Movements</h1>
+        <div>
+            <a asp-action="AdjustStock" class="btn btn-primary me-2">Adjust Stock</a>
+            <a asp-action="TransferStock" class="btn btn-outline-primary">Transfer Stock</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead><tr><th>Date</th><th>Product</th><th>Warehouse</th><th>Type</th><th>Quantity</th><th>Reference</th><th>By</th></tr></thead>
+                    <tbody>
+                        @if (ViewBag.Movements != null)
+                        {
+                            @foreach (dynamic movement in ViewBag.Movements)
+                            {
+                                <tr>
+                                    <td>@movement.CreatedAt</td>
+                                    <td>@movement.ProductName</td>
+                                    <td>@movement.WarehouseName</td>
+                                    <td><span class="badge bg-@(movement.MovementType == "Inbound" ? "success" : movement.MovementType == "Outbound" ? "danger" : "info")">@movement.MovementType</span></td>
+                                    <td>@movement.Quantity</td>
+                                    <td>@movement.ReferenceNumber</td>
+                                    <td>@movement.PerformedBy</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Admin - Supplier Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Supplier: @ViewBag.SupplierName</h1>
+        <a asp-action="Suppliers" class="btn btn-outline-secondary">Back</a>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4"><div class="card-body">
+                <h5>Contact Information</h5>
+                <p><strong>Contact:</strong> @ViewBag.ContactPerson</p>
+                <p><strong>Email:</strong> @ViewBag.Email</p>
+                <p><strong>Phone:</strong> @ViewBag.Phone</p>
+                <p><strong>Address:</strong> @ViewBag.Address</p>
+                <p><strong>Rating:</strong> <span class="text-warning">&#9733;</span> @ViewBag.Rating</p>
+                <p><strong>Lead Time:</strong> @ViewBag.LeadTimeDays days</p>
+                <p><strong>Payment Terms:</strong> @ViewBag.PaymentTerms</p>
+            </div></div>
+        </div>
+        <div class="col-md-8">
+            <div class="card"><div class="card-header"><h5>Products Supplied</h5></div><div class="card-body">
+                <table class="table table-sm"><thead><tr><th>Product</th><th>SKU</th><th>Last Order</th><th>Unit Price</th></tr></thead><tbody>
+                    @if (ViewBag.Products != null) { @foreach (dynamic p in ViewBag.Products) { <tr><td>@p.ProductName</td><td>@p.Sku</td><td>@p.LastOrderDate</td><td>$@p.UnitPrice</td></tr> } }
+                </tbody></table>
+            </div></div>
+        </div>
+    </div>
+</div>
