@@ -1,0 +1,14 @@
+<div class="mini-cart">
+    <div class="mini-cart-header d-flex justify-content-between align-items-center mb-3">
+        <h5>Shopping Cart</h5>
+        <span class="badge bg-primary" id="cart-count">0</span>
+    </div>
+    <div class="mini-cart-items" id="mini-cart-items">
+        <p class="text-muted">Your cart is empty</p>
+    </div>
+    <div class="mini-cart-footer mt-3 pt-3 border-top">
+        <div class="d-flex justify-content-between mb-2"><span>Subtotal:</span><span id="mini-cart-subtotal">$0.00</span></div>
+        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-primary w-100 mb-2">View Cart</a>
+        <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary w-100">Checkout</a>
+    </div>
+</div>
