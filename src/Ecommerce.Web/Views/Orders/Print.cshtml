@@ -1,0 +1,17 @@
+@{ ViewData["Title"] = "Print Order"; Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div class="container mt-4 d-print-none">
+    <div class="d-flex justify-content-between mb-3">
+        <h1>Order Details</h1>
+        <button onclick="window.print()" class="btn btn-primary"><i class="fas fa-print"></i> Print Order</button>
+    </div>
+</div>
+<div class="container d-none d-print-block">
+    <h2>ECommerce Store - Order Summary</h2>
+    <p>Order #@ViewBag.OrderId | @DateTime.Now.ToString("MMMM dd, yyyy")</p>
+    <hr />
+    <table class="table">
+        <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+        <tbody><tr><td>Product</td><td>1</td><td>$29.99</td><td>$29.99</td></tr></tbody>
+    </table>
+    <p><strong>Total: $29.99</strong></p>
+</div>

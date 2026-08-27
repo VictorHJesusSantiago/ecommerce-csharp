@@ -1,0 +1,29 @@
+@{ ViewData["Title"] = "Track Shipment"; Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div class="container mt-4">
+    <h1>Track Your Shipment</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Track" asp-controller="Orders" method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="trackingNumber" placeholder="Enter tracking number" value="@ViewBag.TrackingNumber" />
+                    <button class="btn btn-primary" type="submit">Track</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    @if (ViewBag.TrackingNumber != null)
+    {
+        <div class="card mt-4">
+            <div class="card-header"><h5>Shipment Status</h5></div>
+            <div class="card-body">
+                <p>Tracking Number: <strong>@ViewBag.TrackingNumber</strong></p>
+                <div class="tracking-timeline">
+                    <div class="tracking-step completed"><div class="tracking-dot"></div><div class="tracking-content"><strong>Order Placed</strong><br /><small>Your order has been placed</small></div></div>
+                    <div class="tracking-step completed"><div class="tracking-dot"></div><div class="tracking-content"><strong>Processing</strong><br /><small>Order is being prepared</small></div></div>
+                    <div class="tracking-step active"><div class="tracking-dot"></div><div class="tracking-content"><strong>Shipped</strong><br /><small>Package is on its way</small></div></div>
+                    <div class="tracking-step"><div class="tracking-dot"></div><div class="tracking-content"><strong>Delivered</strong><br /><small>Estimated delivery: 3-5 days</small></div></div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
