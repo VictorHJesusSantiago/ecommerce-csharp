@@ -1,0 +1,10 @@
+@{
+    var tags = (ViewBag.Tags as IEnumerable<string>) ?? Array.Empty<string>();
+}
+<div class="product-tags mt-3">
+    <h6>Tags</h6>
+    @foreach (var tag in tags)
+    {
+        <a asp-controller="Products" asp-action="Index" asp-route-tag="@tag" class="badge bg-secondary text-decoration-none me-1 mb-1">@tag</a>
+    }
+</div>
