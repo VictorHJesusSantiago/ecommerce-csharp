@@ -1,0 +1,53 @@
+@{
+    ViewData["Title"] = "Admin - Notifications";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Notifications</h1>
+        <a asp-action="SendNotification" class="btn btn-primary">Send Notification</a>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white"><div class="card-body text-center"><h3>@ViewBag.TotalSent</h3><p>Total Sent</p></div></div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white"><div class="card-body text-center"><h3>@ViewBag.DeliveredCount</h3><p>Delivered</p></div></div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white"><div class="card-body text-center"><h3>@ViewBag.OpenedCount</h3><p>Opened</p></div></div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white"><div class="card-body text-center"><h3>@ViewBag.ClickedCount</h3><p>Clicked</p></div></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header"><h5>Recent Notifications</h5></div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead><tr><th>Title</th><th>Type</th><th>Channel</th><th>Recipients</th><th>Sent</th><th>Date</th></tr></thead>
+                    <tbody>
+                        @if (ViewBag.Notifications != null)
+                        {
+                            @foreach (dynamic notif in ViewBag.Notifications)
+                            {
+                                <tr>
+                                    <td>@notif.Title</td>
+                                    <td>@notif.Type</td>
+                                    <td><span class="badge bg-info">@notif.Channel</span></td>
+                                    <td>@notif.RecipientCount</td>
+                                    <td><span class="badge bg-success">Sent</span></td>
+                                    <td>@notif.CreatedAt.ToString("MMM dd, HH:mm")</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

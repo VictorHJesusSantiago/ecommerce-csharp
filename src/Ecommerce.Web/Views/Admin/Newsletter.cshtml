@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "Admin - Newsletter";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Newsletter</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white"><div class="card-body text-center"><h3>@ViewBag.TotalSubscribers</h3><p>Total Subscribers</p></div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white"><div class="card-body text-center"><h3>@ViewBag.ActiveSubscribers</h3><p>Active Subscribers</p></div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-warning text-white"><div class="card-body text-center"><h3>@ViewBag.NewThisMonth</h3><p>New This Month</p></div></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header"><h5>Subscribers</h5></div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead><tr><th>Email</th><th>Subscribed</th><th>Source</th><th>Status</th></tr></thead>
+                    <tbody>
+                        @if (ViewBag.Subscribers != null)
+                        {
+                            @foreach (dynamic sub in ViewBag.Subscribers)
+                            {
+                                <tr>
+                                    <td>@sub.Email</td>
+                                    <td>@sub.SubscribedAt.ToString("MMM dd, yyyy")</td>
+                                    <td>@sub.Source</td>
+                                    <td><span class="badge bg-@(sub.IsActive ? "success" : "secondary")">@(sub.IsActive ? "Active" : "Unsubscribed")</span></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
