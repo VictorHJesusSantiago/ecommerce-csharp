@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Admin - Payment Report";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Payment Report</h1>
+    <div class="row mb-4">
+        <div class="col-md-3"><div class="card bg-primary text-white"><div class="card-body text-center"><h3>@ViewBag.TotalPayments</h3><p>Total Payments</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-success text-white"><div class="card-body text-center"><h3>$@ViewBag.TotalRevenue</h3><p>Total Revenue</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-danger text-white"><div class="card-body text-center"><h3>$@ViewBag.TotalRefunds</h3><p>Refunds</p></div></div></div>
+        <div class="col-md-3"><div class="card bg-warning text-white"><div class="card-body text-center"><h3>@ViewBag.RefundRate%</h3><p>Refund Rate</p></div></div></div>
+    </div>
+    <div class="card"><div class="card-header"><h5>Payments by Method</h5></div><div class="card-body">
+        <table class="table table-sm"><thead><tr><th>Method</th><th>Count</th><th>Revenue</th><th>Percentage</th></tr></thead><tbody>
+            @if (ViewBag.PaymentsByMethod != null) { @foreach (dynamic m in ViewBag.PaymentsByMethod) { <tr><td>@m.Method</td><td>@m.Count</td><td>$@m.Revenue</td><td>@m.Percentage%</td></tr> } }
+        </tbody></table>
+    </div></div>
+</div>
