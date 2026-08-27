@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Admin - Create Coupon";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Create Coupon</h1>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="CreateCouponPost" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">Code</label><input type="text" class="form-control" name="Code" required style="text-transform:uppercase;" /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Description</label><input type="text" class="form-control" name="Description" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Discount Type</label><select class="form-select" name="DiscountType"><option value="Percentage">Percentage</option><option value="Fixed">Fixed Amount</option></select></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Discount Value</label><input type="number" class="form-control" name="DiscountValue" step="0.01" required /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Usage Limit</label><input type="number" class="form-control" name="UsageLimit" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Minimum Order Amount</label><input type="number" class="form-control" name="MinimumOrderAmount" step="0.01" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Maximum Discount</label><input type="number" class="form-control" name="MaximumDiscountAmount" step="0.01" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Start Date</label><input type="datetime-local" class="form-control" name="StartDate" required /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">End Date</label><input type="datetime-local" class="form-control" name="EndDate" required /></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Coupon</button>
+                <a asp-action="Coupons" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

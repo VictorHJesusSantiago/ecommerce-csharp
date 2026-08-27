@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Admin - Create Category";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Create Category</h1>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="CreateCategoryPost" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">Name</label><input type="text" class="form-control" name="Name" required /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Slug</label><input type="text" class="form-control" name="Slug" /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Description</label><textarea class="form-control" name="Description" rows="3"></textarea></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Parent Category</label><select class="form-select" name="ParentCategoryId"><option value="">None (Top Level)</option></select></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Image</label><input type="file" class="form-control" name="Image" accept="image/*" /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Display Order</label><input type="number" class="form-control" name="DisplayOrder" value="1" /></div>
+                    <div class="col-md-6 form-check mt-4"><input type="checkbox" class="form-check-input" name="IsActive" value="true" checked /><label class="form-check-label">Active</label></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Category</button>
+                <a asp-action="Categories" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
