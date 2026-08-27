@@ -1,0 +1,117 @@
+@model Ecommerce.Web.Models.OrderDetailViewModel
+@{
+    ViewData["Title"] = $"Order {Model.Order?.OrderNumber}";
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Order @Model.Order?.OrderNumber</h1>
+        <a asp-action="History" class="btn btn-outline-secondary">Back to Orders</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header"><h5>Order Details</h5></div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>Order Number:</strong> @Model.Order?.OrderNumber<br />
+                            <strong>Order Date:</strong> @Model.Order?.CreatedAt.ToString("MMMM dd, yyyy")<br />
+                            <strong>Payment Method:</strong> @Model.Order?.PaymentMethod
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Status:</strong> <span class="badge bg-@(Model.Order?.Status == "Delivered" ? "success" : Model.Order?.Status == "Cancelled" ? "danger" : "warning")">@Model.Order?.Status</span><br />
+                            <strong>Payment Status:</strong> @Model.Order?.PaymentStatus
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header"><h5>Order Items</h5></div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr><th>Product</th><th>Price</th><th>Qty</th><th>Total</th></tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Order?.Items?.Any() == true)
+                            {
+                                @foreach (var item in Model.Order.Items)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                @if (!string.IsNullOrEmpty(item.ProductImage))
+                                                {
+                                                    <img src="@item.ProductImage" alt="@item.ProductName" style="width:50px;height:50px;object-fit:cover;" class="me-2" />
+                                                }
+                                                <div>
+                                                    <strong>@item.ProductName</strong><br />
+                                                    <small class="text-muted">SKU: @item.Sku</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>$@item.UnitPrice.ToString("F2")</td>
+                                        <td>@item.Quantity</td>
+                                        <td>$@item.TotalPrice.ToString("F2")</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @if (Model.Order?.History?.Any() == true)
+            {
+                <div class="card mb-4">
+                    <div class="card-header"><h5>Order History</h5></div>
+                    <div class="card-body">
+                        @foreach (var history in Model.Order.History)
+                        {
+                            <div class="d-flex mb-2">
+                                <div class="me-3">
+                                    <span class="badge bg-secondary">@history.Status</span>
+                                </div>
+                                <div>
+                                    <strong>@history.Comment</strong><br />
+                                    <small class="text-muted">@history.CreatedAt.ToString("MMM dd, yyyy HH:mm")</small>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header"><h5>Order Summary</h5></div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2"><span>Subtotal:</span><span>$@Model.Order?.SubTotal.ToString("F2")</span></div>
+                    <div class="d-flex justify-content-between mb-2"><span>Shipping:</span><span>$@Model.Order?.ShippingCost.ToString("F2")</span></div>
+                    <div class="d-flex justify-content-between mb-2"><span>Tax:</span><span>$@Model.Order?.TaxAmount.ToString("F2")</span></div>
+                    @if (Model.Order?.DiscountAmount > 0)
+                    {
+                        <div class="d-flex justify-content-between mb-2 text-success"><span>Discount:</span><span>-$@Model.Order.DiscountAmount.ToString("F2")</span></div>
+                    }
+                    <hr />
+                    <div class="d-flex justify-content-between"><strong>Total:</strong><strong>$@Model.Order?.TotalAmount.ToString("F2")</strong></div>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.Order?.TrackingNumber))
+            {
+                <div class="card mb-4">
+                    <div class="card-header"><h5>Shipping Info</h5></div>
+                    <div class="card-body">
+                        <strong>Carrier:</strong> @Model.Order.Carrier<br />
+                        <strong>Tracking:</strong> @Model.Order.TrackingNumber
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
