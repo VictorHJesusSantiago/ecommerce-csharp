@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "Admin - Edit Product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Edit Product</h1>
+    <form asp-action="EditProductPost" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="Id" value="@ViewBag.ProductId" />
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4"><div class="card-header"><h5>Basic Information</h5></div><div class="card-body">
+                    <div class="mb-3"><label class="form-label">Name</label><input type="text" class="form-control" name="Name" value="@ViewBag.ProductName" required /></div>
+                    <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" name="Description" rows="4">@ViewBag.Description</textarea></div>
+                    <div class="mb-3"><label class="form-label">Short Description</label><input type="text" class="form-control" name="ShortDescription" value="@ViewBag.ShortDescription" /></div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3"><label class="form-label">SKU</label><input type="text" class="form-control" name="Sku" value="@ViewBag.Sku" /></div>
+                        <div class="col-md-4 mb-3"><label class="form-label">Barcode</label><input type="text" class="form-control" name="Barcode" value="@ViewBag.Barcode" /></div>
+                    </div>
+                </div></div>
+                <div class="card mb-4"><div class="card-header"><h5>Pricing</h5></div><div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3"><label class="form-label">Price</label><input type="number" class="form-control" name="Price" step="0.01" value="@ViewBag.Price" /></div>
+                        <div class="col-md-4 mb-3"><label class="form-label">Compare at Price</label><input type="number" class="form-control" name="CompareAtPrice" step="0.01" value="@ViewBag.CompareAtPrice" /></div>
+                        <div class="col-md-4 mb-3"><label class="form-label">Cost Price</label><input type="number" class="form-control" name="CostPrice" step="0.01" value="@ViewBag.CostPrice" /></div>
+                    </div>
+                </div></div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4"><div class="card-body">
+                    <div class="mb-3"><label class="form-label">Category</label><select class="form-select" name="CategoryId"><option value="">Select...</option></select></div>
+                    <div class="mb-3"><label class="form-label">Brand</label><select class="form-select" name="BrandId"><option value="">Select...</option></select></div>
+                    <div class="mb-3"><label class="form-label">Main Image</label><input type="file" class="form-control" name="MainImage" accept="image/*" /></div>
+                    <div class="mb-3 form-check"><input type="checkbox" class="form-check-input" name="IsActive" value="true" @(ViewBag.IsActive == true ? "checked" : "") /><label class="form-check-label">Active</label></div>
+                    <div class="mb-3 form-check"><input type="checkbox" class="form-check-input" name="IsFeatured" value="true" @(ViewBag.IsFeatured == true ? "checked" : "") /><label class="form-check-label">Featured</label></div>
+                </div></div>
+                <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                <a asp-action="Products" class="btn btn-outline-secondary w-100 mt-2">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
