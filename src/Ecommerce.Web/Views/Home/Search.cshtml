@@ -1,0 +1,85 @@
+@model dynamic
+
+@{
+    ViewData["Title"] = "Search Results";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header"><h5>Filters</h5></div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select class="form-select">
+                            <option>All Categories</option>
+                            <option>Electronics</option>
+                            <option>Clothing</option>
+                            <option>Home & Garden</option>
+                            <option>Sports</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Brand</label>
+                        <select class="form-select">
+                            <option>All Brands</option>
+                            <option>Apple</option>
+                            <option>Samsung</option>
+                            <option>Nike</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Price Range</label>
+                        <input type="range" class="form-range" min="0" max="1000">
+                        <div class="d-flex justify-content-between"><small>$0</small><small>$1000</small></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Rating</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rating5">
+                            <label class="form-check-label" for="rating5">5 Stars</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rating4">
+                            <label class="form-check-label" for="rating4">4+ Stars</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rating3">
+                            <label class="form-check-label" for="rating3">3+ Stars</label>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary w-100">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between mb-3">
+                <h4>Search Results <span class="text-muted">(24 items)</span></h4>
+                <select class="form-select" style="width: auto;">
+                    <option>Relevance</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                    <option>Newest</option>
+                    <option>Rating</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="/images/placeholder.jpg" class="card-img-top" alt="Product">
+                        <div class="card-body">
+                            <h6 class="card-title">Wireless Headphones</h6>
+                            <p class="card-text text-primary fw-bold">$49.99</p>
+                            <div class="text-warning">★★★★★ <small class="text-muted">(128)</small></div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <button class="btn btn-sm btn-outline-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
