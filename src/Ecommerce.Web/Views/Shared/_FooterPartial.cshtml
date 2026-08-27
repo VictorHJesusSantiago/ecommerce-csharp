@@ -1,0 +1,68 @@
+<footer class="footer bg-dark text-light py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h5>About Us</h5>
+                <p class="text-muted">Your one-stop e-commerce solution for all your shopping needs.</p>
+                <div class="social-links mt-3">
+                    <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-md-2 mb-4">
+                <h6>Shop</h6>
+                <ul class="list-unstyled">
+                    <li><a asp-controller="Products" asp-action="Index" class="text-muted text-decoration-none">All Products</a></li>
+                    <li><a asp-controller="Products" asp-action="NewArrivals" class="text-muted text-decoration-none">New Arrivals</a></li>
+                    <li><a asp-controller="Products" asp-action="Sale" class="text-muted text-decoration-none">Sale</a></li>
+                    <li><a asp-controller="Products" asp-action="Categories" class="text-muted text-decoration-none">Categories</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 mb-4">
+                <h6>Account</h6>
+                <ul class="list-unstyled">
+                    <li><a asp-controller="Account" asp-action="Index" class="text-muted text-decoration-none">My Account</a></li>
+                    <li><a asp-controller="Orders" asp-action="History" class="text-muted text-decoration-none">Orders</a></li>
+                    <li><a asp-controller="Account" asp-action="Wishlist" class="text-muted text-decoration-none">Wishlist</a></li>
+                    <li><a asp-controller="Cart" asp-action="Index" class="text-muted text-decoration-none">Cart</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 mb-4">
+                <h6>Help</h6>
+                <ul class="list-unstyled">
+                    <li><a asp-controller="Home" asp-action="Contact" class="text-muted text-decoration-none">Contact Us</a></li>
+                    <li><a asp-controller="Home" asp-action="Faq" class="text-muted text-decoration-none">FAQ</a></li>
+                    <li><a asp-controller="Home" asp-action="TermsOfService" class="text-muted text-decoration-none">Terms of Service</a></li>
+                    <li><a asp-controller="Home" asp-action="Privacy" class="text-muted text-decoration-none">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 mb-4">
+                <h6>Contact</h6>
+                <ul class="list-unstyled text-muted">
+                    <li><i class="fas fa-map-marker-alt me-2"></i>123 Street, City</li>
+                    <li><i class="fas fa-phone me-2"></i>+1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope me-2"></i>support@ecommerce.com</li>
+                </ul>
+                <div class="payment-methods mt-3">
+                    <i class="fab fa-cc-visa me-2"></i>
+                    <i class="fab fa-cc-mastercard me-2"></i>
+                    <i class="fab fa-cc-paypal me-2"></i>
+                    <i class="fab fa-cc-stripe me-2"></i>
+                </div>
+            </div>
+        </div>
+        <hr class="my-4" />
+        <div class="row align-items-center">
+            <div class="col-md-6"><p class="mb-0 text-muted">&copy; @DateTime.Now.Year ECommerce. All rights reserved.</p></div>
+            <div class="col-md-6 text-md-end">
+                <div class="currency-selector">
+                    <select class="form-select form-select-sm d-inline-block w-auto" id="currency-selector">
+                        <option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
