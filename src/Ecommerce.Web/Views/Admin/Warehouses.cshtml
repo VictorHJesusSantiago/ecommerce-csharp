@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Admin - Warehouses";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Warehouses</h1>
+        <a asp-action="CreateWarehouse" class="btn btn-primary">Add Warehouse</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead><tr><th>Name</th><th>Code</th><th>City</th><th>Capacity</th><th>Occupancy</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        @if (ViewBag.Warehouses != null)
+                        {
+                            @foreach (dynamic warehouse in ViewBag.Warehouses)
+                            {
+                                <tr>
+                                    <td><strong>@warehouse.Name</strong></td>
+                                    <td>@warehouse.Code</td>
+                                    <td>@warehouse.City</td>
+                                    <td>@warehouse.Capacity</td>
+                                    <td>
+                                        <div class="progress" style="height:20px;">
+                                            <div class="progress-bar bg-@(warehouse.OccupancyPercentage > 80 ? "danger" : warehouse.OccupancyPercentage > 60 ? "warning" : "success")" style="width:@warehouse.OccupancyPercentage%">@warehouse.OccupancyPercentage%</div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-@(warehouse.IsActive ? "success" : "danger")">@(warehouse.IsActive ? "Active" : "Inactive")</span></td>
+                                    <td>
+                                        <a asp-action="WarehouseDetail" asp-route-id="@warehouse.Id" class="btn btn-outline-primary btn-sm">View</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

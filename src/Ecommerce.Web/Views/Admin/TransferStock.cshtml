@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Admin - Transfer Stock";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Transfer Stock</h1>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="TransferStockPost" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">Product</label><select class="form-select" name="ProductId" required><option value="">Select product...</option></select></div>
+                    <div class="col-md-3 mb-3"><label class="form-label">From Warehouse</label><select class="form-select" name="FromWarehouseId" required><option value="">Select...</option></select></div>
+                    <div class="col-md-3 mb-3"><label class="form-label">To Warehouse</label><select class="form-select" name="ToWarehouseId" required><option value="">Select...</option></select></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Quantity</label><input type="number" class="form-control" name="Quantity" min="1" required /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Reason</label><input type="text" class="form-control" name="Reason" required /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Reference Number</label><input type="text" class="form-control" name="ReferenceNumber" /></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Transfer Stock</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Admin - Warehouse Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Warehouse: @ViewBag.WarehouseName</h1>
+        <a asp-action="Warehouses" class="btn btn-outline-secondary">Back</a>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-3"><div class="card"><div class="card-body text-center"><h4>@ViewBag.ProductCount</h4><p class="text-muted mb-0">Products</p></div></div></div>
+        <div class="col-md-3"><div class="card"><div class="card-body text-center"><h4>$@ViewBag.TotalValue</h4><p class="text-muted mb-0">Total Value</p></div></div></div>
+        <div class="col-md-3"><div class="card"><div class="card-body text-center"><h4>@ViewBag.Capacity</h4><p class="text-muted mb-0">Capacity</p></div></div></div>
+        <div class="col-md-3"><div class="card"><div class="card-body text-center"><h4>@ViewBag.Occupancy%</h4><p class="text-muted mb-0">Occupancy</p></div></div></div>
+    </div>
+    <div class="card"><div class="card-header"><h5>Inventory</h5></div><div class="card-body">
+        <table class="table table-sm"><thead><tr><th>Product</th><th>SKU</th><th>Quantity</th><th>Reserved</th><th>Available</th><th>Value</th></tr></thead><tbody>
+            @if (ViewBag.Inventory != null) { @foreach (dynamic item in ViewBag.Inventory) { <tr><td>@item.ProductName</td><td>@item.Sku</td><td>@item.Quantity</td><td>@item.ReservedQuantity</td><td>@(item.Quantity - item.ReservedQuantity)</td><td>$@(item.Quantity * item.CostPerUnit)</td></tr> } }
+        </tbody></table>
+    </div></div>
+</div>
