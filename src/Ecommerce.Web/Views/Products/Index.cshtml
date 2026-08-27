@@ -1,0 +1,166 @@
+@model Ecommerce.Web.Models.ProductListViewModel
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header"><h5>Filters</h5></div>
+                <div class="card-body">
+                    <form asp-action="Index" method="get">
+                        <div class="mb-3">
+                            <label class="form-label">Search</label>
+                            <input type="text" class="form-control" name="search" value="@Model.SearchQuery" placeholder="Search products..." />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" name="categoryId">
+                                <option value="">All Categories</option>
+                                @if (Model.Categories != null)
+                                {
+                                    @foreach (var cat in Model.Categories)
+                                    {
+                                        <option value="@cat.Id" @(Model.CategoryId == cat.Id ? "selected" : "")>@cat.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Brand</label>
+                            <select class="form-select" name="brandId">
+                                <option value="">All Brands</option>
+                                @if (Model.Brands != null)
+                                {
+                                    @foreach (var brand in Model.Brands)
+                                    {
+                                        <option value="@brand.Id" @(Model.BrandId == brand.Id ? "selected" : "")>@brand.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price Range</label>
+                            <div class="row">
+                                <div class="col-6"><input type="number" class="form-control" name="minPrice" placeholder="Min" value="@Model.MinPrice" /></div>
+                                <div class="col-6"><input type="number" class="form-control" name="maxPrice" placeholder="Max" value="@Model.MaxPrice" /></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Rating</label>
+                            <select class="form-select" name="minRating">
+                                <option value="">Any Rating</option>
+                                <option value="4" @(Model.MinRating == 4 ? "selected" : "")>4+ Stars</option>
+                                <option value="3" @(Model.MinRating == 3 ? "selected" : "")>3+ Stars</option>
+                                <option value="2" @(Model.MinRating == 2 ? "selected" : "")>2+ Stars</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" name="inStockOnly" value="true" @(Model.InStockOnly == true ? "checked" : "") />
+                            <label class="form-check-label">In Stock Only</label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" name="isOnSale" value="true" @(Model.IsOnSale == true ? "checked" : "") />
+                            <label class="form-check-label">On Sale</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary w-100 mt-2">Clear Filters</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>Products (@Model.TotalCount results)</h4>
+                <div>
+                    <label class="me-2">Sort by:</label>
+                    <select class="form-select d-inline-block w-auto" onchange="window.location.href=this.value">
+                        <option value="?sortBy=name&sortDescending=false">Name A-Z</option>
+                        <option value="?sortBy=name&sortDescending=true">Name Z-A</option>
+                        <option value="?sortBy=price&sortDescending=false">Price Low-High</option>
+                        <option value="?sortBy=price&sortDescending=true">Price High-Low</option>
+                        <option value="?sortBy=rating&sortDescending=true">Top Rated</option>
+                        <option value="?sortBy=newest&sortDescending=true">Newest</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                @if (Model.Products?.Any() == true)
+                {
+                    @foreach (var product in Model.Products)
+                    {
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 product-card">
+                                <a asp-action="Detail" asp-route-id="@product.Id">
+                                    <img src="@product.MainImageUrl" class="card-img-top" alt="@product.Name" style="height:200px;object-fit:cover;" />
+                                </a>
+                                <div class="card-body">
+                                    <h6 class="card-title"><a asp-action="Detail" asp-route-id="@product.Id" class="text-decoration-none text-dark">@product.Name</a></h6>
+                                    <p class="card-text text-muted small">@product.CategoryName</p>
+                                    <div class="rating mb-2">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            <span class="@(i <= product.AverageRating ? "text-warning" : "text-muted")">&#9733;</span>
+                                        }
+                                        <small class="text-muted">(@product.ReviewCount)</small>
+                                    </div>
+                                    <div class="price">
+                                        @if (product.IsOnSale)
+                                        {
+                                            <span class="text-decoration-line-through text-muted">$@product.CompareAtPrice</span>
+                                        }
+                                        <span class="h5 text-primary ms-1">$@product.Price</span>
+                                    </div>
+                                    @if (product.InStock)
+                                    {
+                                        <span class="badge bg-success mt-2">In Stock</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger mt-2">Out of Stock</span>
+                                    }
+                                </div>
+                                <div class="card-footer bg-transparent">
+                                    <button class="btn btn-primary btn-sm w-100" onclick="addToCart('@product.Id')">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center py-5">
+                        <h5>No products found</h5>
+                        <p>Try adjusting your filters or search terms.</p>
+                    </div>
+                }
+            </div>
+            @if (Model.TotalPages > 1)
+            {
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function addToCart(productId) {
+            fetch('/cart/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ productId: productId, quantity: 1 })
+            }).then(r => r.json()).then(d => { alert('Added to cart!'); });
+        }
+    </script>
+}

@@ -1,0 +1,175 @@
+@model Ecommerce.Web.Models.ProductDetailViewModel
+@{
+    ViewData["Title"] = Model.Product?.Name ?? "Product Detail";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/products">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Product?.Name</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="product-image-gallery">
+                @if (Model.Product?.Images?.Any() == true)
+                {
+                    <img id="mainImage" src="@Model.Product.Images.First().Url" class="img-fluid" alt="@Model.Product.Images.First().AltText" />
+                    <div class="image-thumbnails mt-3">
+                        @foreach (var image in Model.Product.Images)
+                        {
+                            <img src="@image.Url" class="img-thumbnail me-2" alt="@image.AltText" style="width:80px;height:80px;cursor:pointer;" onclick="document.getElementById('mainImage').src='@image.Url'" />
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1>@Model.Product?.Name</h1>
+            <div class="d-flex align-items-center mb-3">
+                <div class="rating me-3">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <span class="@(i <= Model.Product?.AverageRating ? "text-warning" : "text-muted")">&#9733;</span>
+                    }
+                    <span class="ms-2">(@Model.Product?.ReviewCount reviews)</span>
+                </div>
+            </div>
+            <div class="price-section mb-4">
+                @if (Model.Product?.CompareAtPrice > Model.Product?.Price)
+                {
+                    <span class="text-decoration-line-through text-muted me-2">$@Model.Product.CompareAtPrice</span>
+                }
+                <span class="h3 text-primary">$@Model.Product?.Price</span>
+                @if (Model.Product?.IsOnSale == true)
+                {
+                    <span class="badge bg-danger ms-2">Save @Model.Product.DiscountPercentage%</span>
+                }
+            </div>
+            <p>@Model.Product?.Description</p>
+            <div class="stock-status mb-3">
+                @if (Model.Product?.InStock == true)
+                {
+                    <span class="badge bg-success">In Stock</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Out of Stock</span>
+                }
+            </div>
+            @if (Model.Product?.Variants?.Any() == true)
+            {
+                <div class="variants mb-3">
+                    <label class="form-label">Variant:</label>
+                    <select class="form-select" id="variantSelect">
+                        @foreach (var variant in Model.Product.Variants)
+                        {
+                            <option value="@variant.Id">@variant.Name - $@variant.Price</option>
+                        }
+                    </select>
+                </div>
+            }
+            <div class="quantity-selector mb-3">
+                <label class="form-label">Quantity:</label>
+                <div class="input-group" style="width:150px;">
+                    <button class="btn btn-outline-secondary" type="button" onclick="decrementQty()">-</button>
+                    <input type="number" class="form-control text-center" id="quantity" value="1" min="1" max="@(Model.Product?.StockQuantity ?? 10)" />
+                    <button class="btn btn-outline-secondary" type="button" onclick="incrementQty()">+</button>
+                </div>
+            </div>
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary btn-lg" onclick="addToCart('@Model.Product?.Id')">Add to Cart</button>
+                <button class="btn btn-outline-secondary" onclick="addToWishlist('@Model.Product?.Id')">Add to Wishlist</button>
+            </div>
+            <div class="mt-4">
+                <h5>Product Details</h5>
+                <table class="table table-sm">
+                    <tr><td>SKU</td><td>@Model.Product?.Sku</td></tr>
+                    <tr><td>Brand</td><td>@Model.Product?.BrandName</td></tr>
+                    <tr><td>Category</td><td>@Model.Product?.CategoryName</td></tr>
+                    @if (Model.Product?.Weight.HasValue == true)
+                    {
+                        <tr><td>Weight</td><td>@Model.Product.Weight kg</td></tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <ul class="nav nav-tabs" id="productTabs">
+            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#description">Description</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#reviews">Reviews (@Model.Product?.ReviewCount)</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#shipping">Shipping</a></li>
+        </ul>
+        <div class="tab-content p-4">
+            <div class="tab-pane fade show active" id="description">
+                <p>@Model.Product?.Description</p>
+            </div>
+            <div class="tab-pane fade" id="reviews">
+                @if (Model.Reviews?.Any() == true)
+                {
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <div class="review-card border p-3 mb-3">
+                            <div class="d-flex justify-content-between">
+                                <strong>@review.UserFullName</strong>
+                                <small class="text-muted">@review.CreatedAt.ToString("MMM dd, yyyy")</small>
+                            </div>
+                            <div class="rating">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <span class="@(i <= review.Rating ? "text-warning" : "text-muted")">&#9733;</span>
+                                }
+                            </div>
+                            <h6>@review.Title</h6>
+                            <p>@review.Comment</p>
+                            @if (review.IsVerifiedPurchase)
+                            {
+                                <span class="badge bg-info">Verified Purchase</span>
+                            }
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No reviews yet. Be the first to review this product!</p>
+                }
+            </div>
+            <div class="tab-pane fade" id="shipping">
+                <p>Free shipping on orders over $50. Standard shipping: $9.99 (3-5 days). Express shipping: $19.99 (1-2 days).</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function incrementQty() {
+            var input = document.getElementById('quantity');
+            var max = parseInt(input.getAttribute('max'));
+            if (parseInt(input.value) < max) input.value = parseInt(input.value) + 1;
+        }
+        function decrementQty() {
+            var input = document.getElementById('quantity');
+            if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
+        }
+        function addToCart(productId) {
+            var quantity = document.getElementById('quantity').value;
+            var variantSelect = document.getElementById('variantSelect');
+            var variantId = variantSelect ? variantSelect.value : null;
+            fetch('/cart/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ productId: productId, quantity: parseInt(quantity), productVariantId: variantId })
+            }).then(r => r.json()).then(d => { alert('Added to cart!'); });
+        }
+        function addToWishlist(productId) {
+            fetch('/account/wishlist/add/' + productId, { method: 'POST' })
+                .then(r => r.json()).then(d => { alert('Added to wishlist!'); });
+        }
+    </script>
+}

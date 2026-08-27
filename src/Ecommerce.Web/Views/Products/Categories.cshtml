@@ -1,0 +1,45 @@
+@model Ecommerce.Web.Models.CategoryListViewModel
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="container">
+    <h1>Shop by Category</h1>
+    <p class="lead">Browse our wide selection of products by category.</p>
+
+    <div class="row">
+        @if (Model.Categories?.Any() == true)
+        {
+            @foreach (var category in Model.Categories)
+            {
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100 category-card">
+                        <a href="/products?categoryId=@category.Id">
+                            @if (!string.IsNullOrEmpty(category.ImageUrl))
+                            {
+                                <img src="@category.ImageUrl" class="card-img-top" alt="@category.Name" style="height:200px;object-fit:cover;" />
+                            }
+                            else
+                            {
+                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height:200px;">
+                                    <i class="fas fa-folder fa-3x text-muted"></i>
+                                </div>
+                            }
+                        </a>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@category.Name</h5>
+                            <p class="card-text text-muted">@category.ProductCount products</p>
+                            <a href="/products?categoryId=@category.Id" class="btn btn-outline-primary btn-sm">Browse</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center py-5">
+                <h5>No categories available</h5>
+            </div>
+        }
+    </div>
+</div>
