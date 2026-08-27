@@ -1,0 +1,20 @@
+@{ ViewData["Title"] = "Edit Review"; Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header"><h4>Edit Review</h4></div>
+                <div class="card-body">
+                    <form asp-action="UpdateReview" asp-controller="Reviews" method="post">
+                        <input type="hidden" name="ReviewId" value="@ViewBag.ReviewId" />
+                        <div class="mb-3"><label class="form-label">Rating</label><select class="form-select" name="Rating"><option value="5">5 Stars</option><option value="4">4 Stars</option><option value="3">3 Stars</option><option value="2">2 Stars</option><option value="1">1 Star</option></select></div>
+                        <div class="mb-3"><label class="form-label">Title</label><input type="text" class="form-control" name="Title" required /></div>
+                        <div class="mb-3"><label class="form-label">Review</label><textarea class="form-control" name="Content" rows="5" required></textarea></div>
+                        <button type="submit" class="btn btn-primary">Update Review</button>
+                        <a asp-action="MyReviews" class="btn btn-outline-secondary ms-2">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

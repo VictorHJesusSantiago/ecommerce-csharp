@@ -1,0 +1,29 @@
+@{ ViewData["Title"] = "Product Reviews"; Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div class="container mt-4">
+    <h1>Customer Reviews</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h2 class="display-4">4.5</h2>
+                    <div class="star-rating mb-2"><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star-half-alt text-warning"></i></div>
+                    <p class="text-muted">Based on 128 reviews</p>
+                    <div class="rating-bars">
+                        @for (int i = 5; i >= 1; i--) { <div class="d-flex align-items-center mb-1"><span class="me-2">@i ★</span><div class="progress flex-grow-1" style="height:8px;"><div class="progress-bar bg-warning" style="width:@(i == 5 ? "60%" : i == 4 ? "25%" : i == 3 ? "10%" : i == 2 ? "3%" : "2%")"></div></div><span class="ms-2 text-muted small">@i</span></div> }
+                    </div>
+                    <a asp-action="WriteReview" asp-route-productId="@ViewBag.ProductId" class="btn btn-primary mt-3">Write a Review</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="list-group" id="reviews-list">
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between"><h5 class="mb-1">Great quality!</h5><small class="text-muted">3 days ago</small></div>
+                    <div class="star-rating mb-1"><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i></div>
+                    <p class="mb-1">Excellent product, exactly as described. Fast shipping too!</p>
+                    <small class="text-muted">Verified Purchase | Helpful (12)</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

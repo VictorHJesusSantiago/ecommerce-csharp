@@ -1,0 +1,33 @@
+@{ ViewData["Title"] = "Write a Review"; Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header"><h4>Write a Review</h4></div>
+                <div class="card-body">
+                    <form asp-action="SubmitReview" asp-controller="Reviews" method="post">
+                        <input type="hidden" name="ProductId" value="@ViewBag.ProductId" />
+                        <div class="mb-3">
+                            <label class="form-label">Rating</label>
+                            <div class="star-rating-input">
+                                @for (int i = 1; i <= 5; i++) { <i class="fas fa-star rating-star" data-value="@i" onclick="setRating(@i)"></i> }
+                                <input type="hidden" name="Rating" id="reviewRating" value="0" />
+                            </div>
+                        </div>
+                        <div class="mb-3"><label class="form-label">Title</label><input type="text" class="form-control" name="Title" required maxlength="200" /></div>
+                        <div class="mb-3"><label class="form-label">Review</label><textarea class="form-control" name="Content" rows="5" required maxlength="5000"></textarea></div>
+                        <div class="mb-3">
+                            <label class="form-label">Pros (optional)</label><input type="text" class="form-control" name="Pros" placeholder="What did you like?" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cons (optional)</label><input type="text" class="form-control" name="Cons" placeholder="What could be improved?" />
+                        </div>
+                        <div class="form-check mb-3"><input type="checkbox" class="form-check-input" name="RecommendToFriend" value="true" checked /><label class="form-check-label">I would recommend this to a friend</label></div>
+                        <div class="form-check mb-3"><input type="checkbox" class="form-check-input" name="IsVerifiedPurchase" value="true" checked /><label class="form-check-label">This is a verified purchase</label></div>
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
