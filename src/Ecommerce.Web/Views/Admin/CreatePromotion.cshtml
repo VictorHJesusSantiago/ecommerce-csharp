@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "Admin - Create Promotion";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Create Promotion</h1>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="CreatePromotionPost" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">Name</label><input type="text" class="form-control" name="Name" required /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Description</label><input type="text" class="form-control" name="Description" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Discount Type</label><select class="form-select" name="DiscountType"><option value="Percentage">Percentage</option><option value="Fixed">Fixed Amount</option></select></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Discount Value</label><input type="number" class="form-control" name="DiscountValue" step="0.01" required /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Applies to all products</label><select class="form-select" name="AppliesToAllProducts"><option value="true">Yes</option><option value="false">No</option></select></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Start Date</label><input type="datetime-local" class="form-control" name="StartDate" required /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">End Date</label><input type="datetime-local" class="form-control" name="EndDate" required /></div>
+                    <div class="col-md-4 mb-3 form-check mt-4"><input type="checkbox" class="form-check-input" name="IsActive" value="true" checked /><label class="form-check-label">Active</label></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Promotion</button>
+                <a asp-action="Promotions" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

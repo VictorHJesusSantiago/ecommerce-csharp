@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "Admin - Create Purchase Order";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Create Purchase Order</h1>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="CreatePurchaseOrderPost" method="post">
+                <div class="row">
+                    <div class="col-md-4 mb-3"><label class="form-label">Supplier</label><select class="form-select" name="SupplierId" required><option value="">Select supplier...</option></select></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Warehouse</label><select class="form-select" name="WarehouseId" required><option value="">Select warehouse...</option></select></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Expected Delivery</label><input type="date" class="form-control" name="ExpectedDeliveryDate" required /></div>
+                </div>
+                <h5>Items</h5>
+                <div id="itemsContainer">
+                    <div class="row mb-2 item-row">
+                        <div class="col-md-4"><select class="form-select" name="Items[0].ProductId" required><option value="">Product...</option></select></div>
+                        <div class="col-md-2"><input type="number" class="form-control" name="Items[0].Quantity" min="1" placeholder="Qty" required /></div>
+                        <div class="col-md-2"><input type="number" class="form-control" name="Items[0].UnitPrice" step="0.01" placeholder="Unit Price" required /></div>
+                        <div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.item-row').remove()">Remove</button></div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-primary mb-3" onclick="addItem()">Add Item</button>
+                <div class="mb-3"><label class="form-label">Notes</label><textarea class="form-control" name="Notes" rows="2"></textarea></div>
+                <button type="submit" class="btn btn-primary">Create Purchase Order</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let itemIndex = 1;
+        function addItem() {
+            const container = document.getElementById('itemsContainer');
+            const row = document.createElement('div');
+            row.className = 'row mb-2 item-row';
+            row.innerHTML = `<div class="col-md-4"><select class="form-select" name="Items[${itemIndex}].ProductId" required><option value="">Product...</option></select></div><div class="col-md-2"><input type="number" class="form-control" name="Items[${itemIndex}].Quantity" min="1" placeholder="Qty" required /></div><div class="col-md-2"><input type="number" class="form-control" name="Items[${itemIndex}].UnitPrice" step="0.01" placeholder="Unit Price" required /></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.item-row').remove()">Remove</button></div>`;
+            container.appendChild(row);
+            itemIndex++;
+        }
+    </script>
+}
