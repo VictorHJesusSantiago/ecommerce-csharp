@@ -1,0 +1,44 @@
+/* Product page styles */
+.product-gallery { position: relative; }
+.product-gallery .main-image { width: 100%; border-radius: 8px; }
+.product-gallery .thumbnails { display: flex; gap: 8px; margin-top: 12px; }
+.product-gallery .thumbnails img { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s; }
+.product-gallery .thumbnails img:hover, .product-gallery .thumbnails img.active { border-color: #667eea; }
+
+.product-info .price { font-size: 2rem; font-weight: 700; color: #667eea; }
+.product-info .compare-price { text-decoration: line-through; color: #a0aec0; font-size: 1.2rem; margin-right: 8px; }
+.product-info .discount-badge { background-color: #e53e3e; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; }
+
+.product-variants .variant-option { display: inline-block; padding: 8px 16px; border: 2px solid #e2e8f0; border-radius: 8px; cursor: pointer; margin-right: 8px; transition: all 0.2s; }
+.product-variants .variant-option:hover, .product-variants .variant-option.active { border-color: #667eea; background-color: #667eea; color: white; }
+
+.quantity-selector { display: flex; align-items: center; gap: 12px; }
+.quantity-selector button { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #e2e8f0; background: white; cursor: pointer; font-size: 1.2rem; }
+.quantity-selector input { width: 60px; text-align: center; border: 2px solid #e2e8f0; border-radius: 8px; height: 40px; font-size: 1rem; }
+
+/* Cart styles */
+.cart-item { border-bottom: 1px solid #e2e8f0; padding: 16px 0; }
+.cart-item:last-child { border-bottom: none; }
+.cart-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; }
+.cart-summary { background-color: #f7fafc; border-radius: 8px; padding: 24px; }
+
+/* Checkout styles */
+.checkout-step { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 8px; margin-bottom: 16px; }
+.checkout-step.active { background-color: #667eea10; border-left: 4px solid #667eea; }
+.checkout-step .step-number { width: 32px; height: 32px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+.checkout-step.active .step-number { background: #667eea; color: white; }
+
+/* Account styles */
+.account-sidebar .list-group-item { border: none; padding: 12px 16px; }
+.account-sidebar .list-group-item.active { background-color: #667eea; color: white; }
+
+/* Admin styles */
+.admin-sidebar { background-color: #2d3748; min-height: 100vh; }
+.admin-sidebar .nav-link { color: #a0aec0; padding: 12px 20px; }
+.admin-sidebar .nav-link:hover, .admin-sidebar .nav-link.active { color: white; background-color: #4a5568; }
+.admin-stats .stat-card { border-radius: 12px; padding: 24px; color: white; }
+
+/* Search styles */
+.search-suggestion { padding: 10px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px; }
+.search-suggestion:hover { background-color: #f7fafc; }
+.search-highlight { background-color: #fef3c7; padding: 1px 2px; border-radius: 2px; }

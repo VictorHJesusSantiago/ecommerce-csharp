@@ -1,0 +1,26 @@
+.star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; }
+.star-rating input { display: none; }
+.star-rating label { cursor: pointer; font-size: 2rem; color: #e2e8f0; transition: color 0.2s; }
+.star-rating label:hover, .star-rating label:hover ~ label, .star-rating input:checked ~ label { color: #ffc107; }
+
+.review-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 16px; transition: box-shadow 0.2s; }
+.review-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.review-card .reviewer-name { font-weight: 600; }
+.review-card .review-date { color: #a0aec0; font-size: 0.85rem; }
+.review-card .verified-badge { background-color: #38a169; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+
+.helpful-btn { border: 1px solid #e2e8f0; border-radius: 20px; padding: 4px 12px; font-size: 0.85rem; cursor: pointer; background: white; transition: all 0.2s; }
+.helpful-btn:hover { border-color: #667eea; color: #667eea; }
+.helpful-btn.active { background-color: #667eea; color: white; border-color: #667eea; }
+
+.report-btn { border: none; background: none; color: #a0aec0; font-size: 0.85rem; cursor: pointer; }
+.report-btn:hover { color: #e53e3e; }
+
+.review-images { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.review-images img { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }
+.review-images img:hover { opacity: 0.8; }
+
+.review-summary { background: #f7fafc; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+.review-summary .average-rating { font-size: 3rem; font-weight: 700; color: #667eea; }
+.review-summary .rating-bar { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
+.review-summary .rating-bar-fill { height: 100%; background: #ffc107; border-radius: 4px; }
