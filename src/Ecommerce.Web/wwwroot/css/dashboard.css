@@ -1,0 +1,17 @@
+.dashboard-chart { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
+.dashboard-chart canvas { width: 100% !important; height: 300px !important; }
+
+.stat-card-mini { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
+.stat-card-mini .icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; color: white; font-size: 1.2rem; }
+.stat-card-mini h4 { margin: 0; font-weight: 700; color: #2d3748; }
+.stat-card-mini p { margin: 0; color: #718096; font-size: 0.85rem; }
+
+.recent-orders { background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.recent-orders .table td { padding: 10px 16px; vertical-align: middle; }
+
+.low-stock-alert { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0; }
+.low-stock-alert:last-child { border-bottom: none; }
+.low-stock-alert .product-name { font-weight: 500; }
+.low-stock-alert .stock-badge { font-size: 0.8rem; padding: 4px 8px; border-radius: 4px; font-weight: 600; }
+.low-stock-alert .stock-badge.critical { background: #fed7d7; color: #c53030; }
+.low-stock-alert .stock-badge.warning { background: #fefcbf; color: #975a16; }
