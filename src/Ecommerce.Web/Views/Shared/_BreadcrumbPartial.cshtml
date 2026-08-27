@@ -1,0 +1,10 @@
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        @if (ViewData["BreadcrumbParent"] != null)
+        {
+            <li class="breadcrumb-item"><a href="@ViewData["BreadcrumbParentUrl"]">@ViewData["BreadcrumbParent"]</a></li>
+        }
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+    </ol>
+</nav>
