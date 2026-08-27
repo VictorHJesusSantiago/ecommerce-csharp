@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Admin - Edit Warehouse";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Edit Warehouse</h1>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="EditWarehousePost" method="post">
+                <input type="hidden" name="Id" value="@ViewBag.WarehouseId" />
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">Name</label><input type="text" class="form-control" name="Name" value="@ViewBag.Name" required /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Code</label><input type="text" class="form-control" name="Code" value="@ViewBag.Code" required /></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Address</label><input type="text" class="form-control" name="Address" value="@ViewBag.Address" /></div>
+                    <div class="col-md-3 mb-3"><label class="form-label">City</label><input type="text" class="form-control" name="City" value="@ViewBag.City" /></div>
+                    <div class="col-md-3 mb-3"><label class="form-label">State</label><input type="text" class="form-control" name="State" value="@ViewBag.State" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Country</label><input type="text" class="form-control" name="Country" value="@ViewBag.Country" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Postal Code</label><input type="text" class="form-control" name="PostalCode" value="@ViewBag.PostalCode" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Capacity</label><input type="number" class="form-control" name="Capacity" value="@ViewBag.Capacity" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Phone</label><input type="tel" class="form-control" name="Phone" value="@ViewBag.Phone" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Email</label><input type="email" class="form-control" name="Email" value="@ViewBag.Email" /></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">Manager</label><input type="text" class="form-control" name="Manager" value="@ViewBag.Manager" /></div>
+                    <div class="col-md-4 form-check mt-4"><input type="checkbox" class="form-check-input" name="IsActive" value="true" @(ViewBag.IsActive == true ? "checked" : "") /><label class="form-check-label">Active</label></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a asp-action="Warehouses" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
