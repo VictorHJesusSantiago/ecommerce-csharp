@@ -1,0 +1,10 @@
+<div class="quantity-selector d-flex align-items-center">
+    <button class="btn btn-outline-secondary" type="button" onclick="decrementQty(this)">-</button>
+    <input type="number" class="form-control mx-2 text-center" name="Quantity" value="1" min="1" max="99" style="width:70px;" />
+    <button class="btn btn-outline-secondary" type="button" onclick="incrementQty(this)">+</button>
+</div>
+
+<script>
+    function incrementQty(btn) { const input = btn.parentElement.querySelector('input'); if (parseInt(input.value) < parseInt(input.max)) input.value = parseInt(input.value) + 1; }
+    function decrementQty(btn) { const input = btn.parentElement.querySelector('input'); if (parseInt(input.value) > parseInt(input.min)) input.value = parseInt(input.value) - 1; }
+</script>
