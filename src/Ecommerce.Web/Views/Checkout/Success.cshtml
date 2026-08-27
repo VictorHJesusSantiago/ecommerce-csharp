@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "Order Placed Successfully";
+}
+
+<div class="container text-center py-5">
+    <i class="fas fa-check-circle fa-5x text-success mb-4"></i>
+    <h1>Thank You!</h1>
+    <h3>Your order has been placed successfully.</h3>
+    <p class="lead">Order number: <strong>@ViewBag.OrderNumber</strong></p>
+    <p>You will receive an email confirmation shortly with your order details and tracking information.</p>
+    <div class="mt-4">
+        <a asp-action="History" class="btn btn-primary me-2">View Order History</a>
+        <a asp-controller="Products" asp-action="Index" class="btn btn-outline-secondary">Continue Shopping</a>
+    </div>
+</div>
