@@ -1,0 +1,18 @@
+@{ ViewData["Title"] = "Data Export"; Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header"><h4>Export Your Data</h4></div>
+                <div class="card-body">
+                    <p>Request a copy of all your personal data stored in our system.</p>
+                    <p class="text-muted">The export will include your profile information, order history, reviews, and preferences. You will receive an email with a download link once the export is ready.</p>
+                    <form asp-action="RequestDataExport" method="post">
+                        <div class="mb-3"><label class="form-label">Export Format</label><select class="form-select" name="Format"><option value="json">JSON</option><option value="csv">CSV</option><option value="pdf">PDF</option></select></div>
+                        <button type="submit" class="btn btn-primary">Request Export</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

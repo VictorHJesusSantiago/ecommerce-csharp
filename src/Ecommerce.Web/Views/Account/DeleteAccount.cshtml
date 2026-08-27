@@ -1,0 +1,20 @@
+@{ ViewData["Title"] = "Delete Account"; Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white"><h4>Delete Account</h4></div>
+                <div class="card-body">
+                    <p class="text-danger"><strong>Warning:</strong> This action is irreversible. All your data will be permanently deleted.</p>
+                    <ul><li>Your profile and account information</li><li>Your order history</li><li>Your reviews and ratings</li><li>Your wishlist and cart</li><li>All stored payment methods</li></ul>
+                    <form asp-action="DeleteAccountConfirm" method="post">
+                        <div class="mb-3"><label class="form-label">Type your email to confirm</label><input type="email" class="form-control" name="ConfirmEmail" required /></div>
+                        <div class="mb-3"><label class="form-label">Enter your password</label><input type="password" class="form-control" name="Password" required /></div>
+                        <button type="submit" class="btn btn-danger">Permanently Delete My Account</button>
+                        <a asp-action="Settings" class="btn btn-outline-secondary ms-2">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
