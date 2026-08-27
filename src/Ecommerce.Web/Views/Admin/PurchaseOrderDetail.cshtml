@@ -1,0 +1,71 @@
+@{
+    ViewData["Title"] = "Admin - Purchase Order Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Purchase Order @ViewBag.OrderNumber</h1>
+        <a asp-action="PurchaseOrders" class="btn btn-outline-secondary">Back</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header"><h5>Order Information</h5></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>PO Number:</strong> @ViewBag.OrderNumber</p>
+                            <p><strong>Supplier:</strong> @ViewBag.SupplierName</p>
+                            <p><strong>Warehouse:</strong> @ViewBag.WarehouseName</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Status:</strong> <span class="badge bg-warning">@ViewBag.Status</span></p>
+                            <p><strong>Expected Delivery:</strong> @ViewBag.ExpectedDelivery</p>
+                            <p><strong>Created By:</strong> @ViewBag.CreatedBy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header"><h5>Items</h5></div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead><tr><th>Product</th><th>SKU</th><th>Qty</th><th>Unit Price</th><th>Total</th><th>Received</th></tr></thead>
+                        <tbody>
+                            @if (ViewBag.Items != null)
+                            {
+                                @foreach (dynamic item in ViewBag.Items)
+                                {
+                                    <tr>
+                                        <td>@item.ProductName</td>
+                                        <td>@item.Sku</td>
+                                        <td>@item.Quantity</td>
+                                        <td>$@item.UnitPrice</td>
+                                        <td>$@item.TotalPrice</td>
+                                        <td>@item.ReceivedQuantity</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header"><h5>Summary</h5></div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2"><span>Subtotal:</span><span>@ViewBag.SubTotal</span></div>
+                    <div class="d-flex justify-content-between mb-2"><span>Tax:</span><span>@ViewBag.TaxAmount</span></div>
+                    <div class="d-flex justify-content-between mb-2"><span>Shipping:</span><span>@ViewBag.ShippingCost</span></div>
+                    <hr />
+                    <div class="d-flex justify-content-between"><strong>Total:</strong><strong>@ViewBag.TotalAmount</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
