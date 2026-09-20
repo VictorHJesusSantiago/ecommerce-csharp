@@ -4,6 +4,19 @@ namespace Ecommerce.Domain.Factories;
 
 public static class ProductFactory
 {
+    public static Product CreateProduct(
+        string name, decimal price, string sku, string slug,
+        string? description = null, Guid? categoryId = null, Guid? brandId = null)
+    {
+        var product = Product.Create(name, sku, price, categoryId ?? Guid.Empty, description);
+        if (brandId.HasValue)
+        {
+            product.SetBrand(brandId.Value);
+        }
+        product.SetSlug(slug);
+        return product;
+    }
+
     public static Product CreateElectronics(
         string name, string sku, decimal price, Guid categoryId,
         decimal weight, string? brand = null)
@@ -40,7 +53,7 @@ public static class ProductFactory
             productType: Enums.ProductType.Bundle,
             isTaxable: true,
             isShippingRequired: true,
-            tags: string.Join(",", includedProductIds ?? Enumerable.Empty<Guid>()));
+            description: string.Join(",", includedProductIds ?? Enumerable.Empty<Guid>()));
     }
 
     public static Product CreateService(
@@ -94,6 +107,14 @@ public static class ProductFactory
 
 public static class CategoryFactory
 {
+    public static Category CreateCategory(
+        string name, Guid? parentCategoryId = null, string? description = null,
+        string? imageUrl = null, int displayOrder = 0)
+    {
+        return Category.Create(name, new Ecommerce.Domain.ValueObjects.Slug(name).Value, description,
+            imageUrl, parentCategoryId, displayOrder);
+    }
+
     public static Category CreateElectronicsCategory()
     {
         return Category.Create("Electronics", "electronics",
@@ -114,11 +135,11 @@ public static class CategoryFactory
 
     public static Category CreateWithSubcategories(string name, params string[] subcategoryNames)
     {
-        var parent = Category.Create(name, Slug.Create(name).Value);
+        var parent = Category.Create(name, (new Ecommerce.Domain.ValueObjects.Slug(name)).Value);
         var displayOrder = 0;
         foreach (var subName in subcategoryNames)
         {
-            var sub = Category.Create(subName, Slug.Create(subName).Value, parentCategoryId: parent.Id, displayOrder: displayOrder++);
+            var sub = Category.Create(subName, (new Ecommerce.Domain.ValueObjects.Slug(subName)).Value, parentCategoryId: parent.Id, displayOrder: displayOrder++);
             parent.AddSubcategory(sub);
         }
         return parent;
@@ -128,12 +149,12 @@ public static class CategoryFactory
 public static class OrderFactory
 {
     public static Entities.Ordering.Order CreateOrder(
-        Guid customerId, string currency = "USD")
+        Guid userId, string orderNumber, string? notes = null,
+        Guid? shippingAddressId = null, Guid? billingAddressId = null)
     {
-        return Entities.Ordering.Order.Create(
-            customerId,
-            Entities.Ordering.Order.GenerateOrderNumber(),
-            currency);
+        var order = Entities.Ordering.Order.Create(userId, orderNumber, "USD");
+        order.Notes = notes;
+        return order;
     }
 
     public static Entities.Ordering.OrderItem CreateOrderItem(
@@ -148,6 +169,13 @@ public static class OrderFactory
 
 public static class CartFactory
 {
+    public static Entities.Cart.ShoppingCart CreateCart(Guid? userId, string? sessionId = null)
+    {
+        return userId.HasValue
+            ? Entities.Cart.ShoppingCart.CreateForUser(userId.Value)
+            : Entities.Cart.ShoppingCart.CreateForSession(sessionId ?? throw new ArgumentException("Session ID is required.", nameof(sessionId)));
+    }
+
     public static Entities.Cart.ShoppingCart CreateCartForUser(Guid userId, string currency = "USD")
     {
         return Entities.Cart.ShoppingCart.CreateForUser(userId, currency);

@@ -43,7 +43,7 @@ public class Category : AggregateRoot
         {
             Id = Guid.NewGuid(),
             Name = name.Trim(),
-            Slug = slug ?? Slug.Create(name).Value,
+            Slug = slug ?? (new Ecommerce.Domain.ValueObjects.Slug(name)).Value,
             Description = description?.Trim(),
             ImageUrl = imageUrl,
             ParentCategoryId = parentCategoryId,
