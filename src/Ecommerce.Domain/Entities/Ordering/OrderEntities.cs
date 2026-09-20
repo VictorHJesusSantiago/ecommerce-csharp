@@ -1,9 +1,15 @@
 using Ecommerce.Domain.Abstractions;
+using Ecommerce.Domain.Entities.Shipping;
 
 namespace Ecommerce.Domain.Entities.Ordering;
 
 public class Order : BaseEntity
 {
+    public static Order Create(Guid userId, string orderNumber, string currency = "USD")
+    {
+        return new Order { UserId = userId, OrderNumber = orderNumber, Status = OrderStatus.Pending };
+    }
+
     public string OrderNumber { get; set; } = string.Empty;
     public Guid UserId { get; set; }
     public OrderStatus Status { get; set; } = OrderStatus.Pending;
@@ -61,6 +67,17 @@ public class Order : BaseEntity
 
 public class OrderItem : BaseEntity
 {
+    public static OrderItem Create(Guid orderId, Guid productId, string productName,
+        string productSlug, string sku, int quantity, decimal unitPrice, string? productImageUrl = null)
+    {
+        return new OrderItem
+        {
+            OrderId = orderId, ProductId = productId, ProductName = productName,
+            Sku = sku, Quantity = quantity, UnitPrice = unitPrice,
+            TotalPrice = unitPrice * quantity, ImageUrl = productImageUrl
+        };
+    }
+
     public Guid OrderId { get; set; }
     public Guid ProductId { get; set; }
     public Guid? VariantId { get; set; }

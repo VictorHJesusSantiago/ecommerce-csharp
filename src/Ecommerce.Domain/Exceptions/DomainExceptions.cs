@@ -64,6 +64,22 @@ public class RateLimitExceededException : DomainException
     public RateLimitExceededException() : base("Rate limit exceeded. Please try again later.", "RateLimit") { }
 }
 
+public class InvalidDomainOperationException : DomainException
+{
+    public InvalidDomainOperationException(string message) : base(message, "InvalidOperation") { }
+}
+
+public class EntityNotFoundException : NotFoundException
+{
+    public EntityNotFoundException(string name, object key) : base(name, key) { }
+}
+
+public class InsufficientStockException : DomainException
+{
+    public InsufficientStockException(string name, int requested, int available)
+        : base($"Insufficient stock for {name}. Requested: {requested}; available: {available}.", "InsufficientStock") { }
+}
+
 public class ExternalServiceException : DomainException
 {
     public string ServiceName { get; }
