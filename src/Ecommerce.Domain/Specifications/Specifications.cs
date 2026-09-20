@@ -1,4 +1,6 @@
+using System.Linq.Expressions;
 using Ecommerce.Domain.Entities.Catalog;
+using Ecommerce.Domain.Enums;
 
 namespace Ecommerce.Domain.Specifications;
 
@@ -114,14 +116,14 @@ public abstract class BaseSpecification<T> where T : class
     public Expression<Func<T, bool>>? Criteria { get; }
     public List<Expression<Func<T, object>>> Includes { get; } = [];
     public List<string> IncludeStrings { get; } = [];
-    public Expression<Func<T, object>>? OrderBy { get; }
-    public Expression<Func<T, object>>? OrderByDescending { get; }
-    public Expression<Func<T, object>>? ThenBy { get; }
-    public Expression<Func<T, object>>? ThenByDescending { get; }
-    public int? Take { get; }
-    public int? Skip { get; }
-    public bool IsPagingEnabled { get; }
-    public bool IsDistinct { get; }
+    public Expression<Func<T, object>>? OrderBy { get; private set; }
+    public Expression<Func<T, object>>? OrderByDescending { get; private set; }
+    public Expression<Func<T, object>>? ThenBy { get; private set; }
+    public Expression<Func<T, object>>? ThenByDescending { get; private set; }
+    public int? Take { get; private set; }
+    public int? Skip { get; private set; }
+    public bool IsPagingEnabled { get; private set; }
+    public bool IsDistinct { get; private set; }
 
     protected BaseSpecification(Expression<Func<T, bool>>? criteria)
     {
@@ -169,12 +171,6 @@ public abstract class BaseSpecification<T> where T : class
     {
         if (Criteria != null)
             query = query.Where(Criteria);
-
-        foreach (var include in Includes)
-            query = query.Include(include);
-
-        foreach (var includeString in IncludeStrings)
-            query = query.Include(includeString);
 
         if (OrderBy != null)
         {

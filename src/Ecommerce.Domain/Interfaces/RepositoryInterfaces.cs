@@ -184,10 +184,10 @@ public interface IEmailTemplateRepository : IRepository<Entities.Notification.Em
     Task<Entities.Notification.EmailTemplate?> GetByNameAsync(string name, CancellationToken cancellationToken = default);
 }
 
-public interface INewsletterRepository : IRepository<Entities.Notification.NewsletterSubscriber>
+public interface INewsletterRepository : IRepository<Entities.Marketing.NewsletterSubscriber>
 {
-    Task<Entities.Notification.NewsletterSubscriber?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
-    Task<IReadOnlyList<Entities.Notification.NewsletterSubscriber>> GetActiveSubscribersAsync(CancellationToken cancellationToken = default);
+    Task<Entities.Marketing.NewsletterSubscriber?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<Entities.Marketing.NewsletterSubscriber>> GetActiveSubscribersAsync(CancellationToken cancellationToken = default);
 }
 
 public interface IShipmentRepository : IRepository<Entities.Shipping.Shipment>
@@ -197,31 +197,31 @@ public interface IShipmentRepository : IRepository<Entities.Shipping.Shipment>
     Task<IReadOnlyList<Entities.Shipping.Shipment>> GetPendingShipmentsAsync(CancellationToken cancellationToken = default);
 }
 
-public interface ICmsPageRepository : IRepository<Entities.CMS.CmsPage>
+public interface ICmsPageRepository : IRepository<Entities.Cms.CmsPage>
 {
-    Task<Entities.CMS.CmsPage?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default);
-    Task<IReadOnlyList<Entities.CMS.CmsPage>> GetPublishedPagesAsync(CancellationToken cancellationToken = default);
-    Task<IReadOnlyList<Entities.CMS.CmsPage>> GetNavigationPagesAsync(CancellationToken cancellationToken = default);
+    Task<Entities.Cms.CmsPage?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<Entities.Cms.CmsPage>> GetPublishedPagesAsync(CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<Entities.Cms.CmsPage>> GetNavigationPagesAsync(CancellationToken cancellationToken = default);
 }
 
-public interface INavigationMenuRepository : IRepository<Entities.CMS.NavigationMenu>
+public interface INavigationMenuRepository : IRepository<Entities.Cms.NavigationMenu>
 {
-    Task<Entities.CMS.NavigationMenu?> GetByNameAsync(string name, CancellationToken cancellationToken = default);
-    Task<Entities.CMS.NavigationMenu?> GetWithItemsAsync(Guid id, CancellationToken cancellationToken = default);
-    Task<IReadOnlyList<Entities.CMS.NavigationMenu>> GetByLocationAsync(Enums.MenuLocation location, CancellationToken cancellationToken = default);
+    Task<Entities.Cms.NavigationMenu?> GetByNameAsync(string name, CancellationToken cancellationToken = default);
+    Task<Entities.Cms.NavigationMenu?> GetWithItemsAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<Entities.Cms.NavigationMenu>> GetByLocationAsync(Enums.MenuLocation location, CancellationToken cancellationToken = default);
 }
 
-public interface ISiteSettingRepository : IRepository<Entities.CMS.SiteSetting>
+public interface ISiteSettingRepository : IRepository<Entities.Cms.SiteSetting>
 {
-    Task<Entities.CMS.SiteSetting?> GetByKeyAsync(string key, CancellationToken cancellationToken = default);
+    Task<Entities.Cms.SiteSetting?> GetByKeyAsync(string key, CancellationToken cancellationToken = default);
     Task<IDictionary<string, string?>> GetByGroupAsync(string group, CancellationToken cancellationToken = default);
     Task<IDictionary<string, string?>> GetAllSettingsAsync(CancellationToken cancellationToken = default);
 }
 
-public interface IMediaFileRepository : IRepository<Entities.CMS.MediaFile>
+public interface IMediaFileRepository : IRepository<Entities.Cms.MediaFile>
 {
-    Task<Entities.CMS.MediaFile?> GetByFileNameAsync(string fileName, CancellationToken cancellationToken = default);
-    Task<IReadOnlyList<Entities.CMS.MediaFile>> GetByFolderAsync(string folder, CancellationToken cancellationToken = default);
+    Task<Entities.Cms.MediaFile?> GetByFileNameAsync(string fileName, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<Entities.Cms.MediaFile>> GetByFolderAsync(string folder, CancellationToken cancellationToken = default);
 }
 
 public interface IWishlistRepository : IRepository<Entities.Identity.UserWishlist>

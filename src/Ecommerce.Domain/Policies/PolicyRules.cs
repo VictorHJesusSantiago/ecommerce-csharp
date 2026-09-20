@@ -11,6 +11,12 @@ public interface IPricingPolicy
     string PolicyName { get; }
 }
 
+public sealed class PricingContext
+{
+    public string? CustomerTier { get; init; }
+    public bool IsWholesale { get; init; }
+}
+
 public interface IStockPolicy
 {
     bool CanAddToCart(Product product, int requestedQuantity, int currentCartQuantity);
@@ -76,9 +82,9 @@ public class StandardStockPolicy : IStockPolicy
     public string PolicyName => "Standard";
     public bool CanAddToCart(Product product, int requestedQuantity, int currentCartQuantity)
     {
-        return product.StockQuantity >= (requestedQuantity + currentCartQuantity);
+        return product.IsInStock() || product.AllowBackorder;
     }
-    public int GetMaxAllowedQuantity(Product product) => product.StockQuantity;
+    public int GetMaxAllowedQuantity(Product product) => product.IsInStock() ? int.MaxValue : 0;
 }
 
 public class PerOrderStockPolicy : IStockPolicy
@@ -86,9 +92,9 @@ public class PerOrderStockPolicy : IStockPolicy
     public string PolicyName => "PerOrder";
     public bool CanAddToCart(Product product, int requestedQuantity, int currentCartQuantity)
     {
-        return requestedQuantity <= 10 && product.StockQuantity >= requestedQuantity;
+        return requestedQuantity <= 10 && product.IsInStock();
     }
-    public int GetMaxAllowedQuantity(Product product) => Math.Min(product.StockQuantity, 10);
+    public int GetMaxAllowedQuantity(Product product) => product.IsInStock() ? 10 : 0;
 }
 
 public class StandardOrderPolicy : IOrderPolicy

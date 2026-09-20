@@ -1,4 +1,5 @@
 using Ecommerce.Domain.Entities.Catalog;
+using Ecommerce.Domain.Entities.Marketing;
 using Ecommerce.Domain.Entities.Ordering;
 using Ecommerce.Domain.Enums;
 
