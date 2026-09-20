@@ -1,5 +1,6 @@
 using Ecommerce.Domain.Abstractions;
 using Ecommerce.Domain.Enums;
+using Ecommerce.Domain.Entities.Catalog;
 
 namespace Ecommerce.Domain.Entities.Identity;
 

@@ -63,6 +63,9 @@ public class Product : AggregateRoot
 
     private Product() { }
 
+    public void SetSlug(string slug) => Slug = string.IsNullOrWhiteSpace(slug) ? Slug : slug;
+    public void SetBrand(Guid brandId) => BrandId = brandId;
+
     public static Product Create(
         string name,
         string sku,
@@ -93,7 +96,7 @@ public class Product : AggregateRoot
         {
             Id = Guid.NewGuid(),
             Name = name.Trim(),
-            Slug = Slug.Create(name).Value,
+            Slug = (new Ecommerce.Domain.ValueObjects.Slug(name)).Value,
             SKU = sku.ToUpperInvariant(),
             Description = description?.Trim(),
             ShortDescription = shortDescription?.Trim(),
