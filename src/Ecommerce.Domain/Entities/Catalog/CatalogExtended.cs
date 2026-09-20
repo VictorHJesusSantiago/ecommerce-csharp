@@ -34,7 +34,7 @@ public class ProductCollection : BaseEntity
         {
             Id = Guid.NewGuid(),
             Name = name.Trim(),
-            Slug = Slug.Create(name).Value,
+            Slug = (new Ecommerce.Domain.ValueObjects.Slug(name)).Value,
             Description = description?.Trim(),
             ImageUrl = imageUrl,
             IsActive = true,

@@ -39,7 +39,7 @@ public class Brand : AggregateRoot
         {
             Id = Guid.NewGuid(),
             Name = name.Trim(),
-            Slug = Slug.Create(name).Value,
+            Slug = (new Ecommerce.Domain.ValueObjects.Slug(name)).Value,
             Description = description?.Trim(),
             LogoUrl = logoUrl,
             BannerUrl = bannerUrl,
@@ -133,7 +133,7 @@ public class ProductTag : BaseEntity
         {
             Id = Guid.NewGuid(),
             Name = name.Trim().ToLowerInvariant(),
-            Slug = Slug.Create(name).Value,
+            Slug = (new Ecommerce.Domain.ValueObjects.Slug(name)).Value,
             ProductId = productId,
             CreatedAt = DateTime.UtcNow
         };
