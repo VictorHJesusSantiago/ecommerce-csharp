@@ -1,3 +1,15 @@
+using Wrappers;
+using DTOs.Product;
+using DTOs.Order;
+using DTOs.Cart;
+using DTOs.User;
+using DTOs.Review;
+using DTOs.Marketing;
+using DTOs.Notification;
+using DTOs.Report;
+using DTOs.Inventory;
+using DTOs.CMS;
+
 namespace Ecommerce.Application.Interfaces;
 
 public interface IProductService
@@ -108,15 +120,3 @@ public interface INavigationService
     Task<ApiResponse<List<NavigationMenuDto>>> GetMenusByLocationAsync(string location, CancellationToken cancellationToken = default);
     Task<ApiResponse<NavigationMenuDto>> CreateMenuAsync(CreateNavigationMenuRequest request, CancellationToken cancellationToken = default);
 }
-
-using Wrappers;
-using DTOs.Product;
-using DTOs.Order;
-using DTOs.Cart;
-using DTOs.User;
-using DTOs.Review;
-using DTOs.Marketing;
-using DTOs.Notification;
-using DTOs.Report;
-using DTOs.Inventory;
-using DTOs.CMS;
