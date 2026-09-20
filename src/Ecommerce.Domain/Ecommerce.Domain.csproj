@@ -5,4 +5,13 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Ecommerce.Domain</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Abstractions\BaseEntities.cs" />
+    <Compile Remove="Entities\Catalog\CatalogEntities.cs" />
+    <Compile Remove="Factories\EntityFactories.cs" />
+    <Compile Remove="Events\DomainEvents.cs" />
+    <Compile Remove="Specifications\BaseSpecification.cs" />
+    <Compile Remove="Aggregates\Aggregates.cs" />
+    <Compile Remove="PolicyRules\PolicyRules.cs" />
+  </ItemGroup>
 </Project>
