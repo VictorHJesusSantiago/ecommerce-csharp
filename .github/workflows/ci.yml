@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  build-test-scan:
+    name: Build, test, format, and scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore unit tests
+        run: dotnet restore tests/Ecommerce.UnitTests/Ecommerce.UnitTests.csproj
+
+      - name: Build unit tests
+        run: dotnet build tests/Ecommerce.UnitTests/Ecommerce.UnitTests.csproj --configuration Release --no-restore
+
+      - name: Test unit tests
+        run: dotnet test tests/Ecommerce.UnitTests/Ecommerce.UnitTests.csproj --configuration Release --no-build --verbosity normal
+
+      - name: Restore architecture tests
+        run: dotnet restore tests/Ecommerce.ArchitectureTests/Ecommerce.ArchitectureTests.csproj
+
+      - name: Test architecture tests
+        run: dotnet test tests/Ecommerce.ArchitectureTests/Ecommerce.ArchitectureTests.csproj --configuration Release --verbosity normal
+
+      - name: Format check
+        run: dotnet format tests/Ecommerce.UnitTests/Ecommerce.UnitTests.csproj --verify-no-changes --no-restore --verbosity minimal
+
+      - name: Vulnerability scan
+        run: dotnet list tests/Ecommerce.UnitTests/Ecommerce.UnitTests.csproj package --vulnerable --include-transitive
